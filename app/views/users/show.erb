@@ -1,1 +1,28 @@
-<h1>show.erb</h1>
+<!-- /users/show -->
+<div class="container">
+
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Welcome to My_FavTools</h2>
+
+    <% if flash[:message] %>
+      <div class="flash-message-wrapper">
+        <%= flash[:message] %>
+      </div>
+    <% end %>
+
+    <div class="content">
+
+      <% if logged_in? %>
+        <p>Welcome Back <%= current_user.name %></p>
+
+        <a href="/folders">Folders</a>
+        <a href="/folders/new">New Folders</a>
+        <a href="/logout">Log out</a>
+
+      <% else %>
+        <h3><a href="/signup">Sign Up</a> or <a href="/login">Log In</a> to continue.</h3>
+      <% end %>
+
+    </div> <!-- .content -->
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->

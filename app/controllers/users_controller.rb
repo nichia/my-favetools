@@ -18,7 +18,11 @@ class UsersController < ApplicationController
     if logged_in?
       @user = User.find_by_slug(params[:slug])
       if @user
-        erb :'/users/show'
+        if @user == current_user
+          flash[:message] = "#{params[:slug]} is not your account."
+        else
+          erb :'/users/show'
+        end
       else
         erb :'not_found'
       end

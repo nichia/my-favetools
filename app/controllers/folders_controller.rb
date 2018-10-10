@@ -5,7 +5,7 @@ class FoldersController < ApplicationController
     if logged_in?
       erb :'/folders/index'
     else
-      flash[:message] = "You must be logged in to proceed."
+      flash[:message] = "You must be logged in to view folders."
       redirect :"/login"
     end
   end
@@ -15,7 +15,7 @@ class FoldersController < ApplicationController
     if logged_in?
       erb :'/folders/new'
     else
-      flash[:message] = "You must be logged in to proceed."
+      flash[:message] = "You must be logged in to create folders."
       redirect :"/login"
     end
   end
