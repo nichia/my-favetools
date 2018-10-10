@@ -32,7 +32,7 @@
 #### Attributes
 -	name
 -	description
--	link url
+-	url link
 -	rating
 -	folder id
 #### Associations

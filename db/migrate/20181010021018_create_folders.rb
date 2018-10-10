@@ -3,7 +3,7 @@ class CreateFolders < ActiveRecord::Migration
     create_table :folders do |t|
       t.string :name
       t.text :description
-      t.integer :privacy, default: 0
+      t.boolean :privacy, default: false
       t.integer :user_id
       t.integer :category_id
 

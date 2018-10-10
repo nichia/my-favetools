@@ -3,7 +3,7 @@ class CreateTools < ActiveRecord::Migration
     create_table :tools do |t|
       t.string :name
       t.text :description
-      t.string :link_url
+      t.string :url_link
       t.integer :rating, default: 0
       t.integer :folder_id
 

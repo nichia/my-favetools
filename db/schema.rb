@@ -22,17 +22,17 @@ ActiveRecord::Schema.define(version: 20181010021039) do
   create_table "folders", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.integer  "privacy",     default: 0
+    t.boolean  "privacy",     default: false
     t.integer  "user_id"
     t.integer  "category_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   create_table "tools", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.string   "link_url"
+    t.string   "url_link"
     t.integer  "rating",      default: 0
     t.integer  "folder_id"
     t.datetime "created_at",              null: false
