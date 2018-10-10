@@ -1,6 +1,6 @@
 class ToolsController < ApplicationController
 
-  # renders landing page form for login or signup
+  # GET /tools route #index action
   get "/tools" do
     erb :index
   end

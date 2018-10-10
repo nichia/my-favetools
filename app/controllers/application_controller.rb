@@ -7,7 +7,8 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
 
     enable :sessions
-    set :session_secret, "favtools password_security"
+    set :session_secret, "22ffe9cb5fda286377df854e56e17bebbaa41969f6e41418c7ecae693952d7a42ab5cbd85d8c061c46dd30dd79fc802d67793
+0dc28bb7195df9c07642f6cc96f"
 
     register Sinatra::Flash
   end #-- configure --
@@ -30,8 +31,8 @@ class ApplicationController < Sinatra::Base
   helpers do
 
     def logged_in?
-      !!current_user
-      # !!session[:user_id]
+      #!!current_user
+      !!session[:user_id]
     end
 
     def current_user

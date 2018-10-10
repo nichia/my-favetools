@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/:slug #show action
-  # Read action to list this user's recipes
+  # Read action to list this user's account settings
   get '/users/:slug' do
     if logged_in?
       @user = User.find_by_slug(params[:slug])
