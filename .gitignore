@@ -1,0 +1,21 @@
+# please add general patterns to your global ignore list
+# see https://github.com/github/gitignore#readme
+
+*.swp
+*.rbc
+*.sass-cache
+/pkg
+/Gemfile.lock
+/coverage
+.yardoc
+/doc
+/db/*.sqlite
+/db/*.db
+
+### Ignore dotenv ###
+/.env
+
+### macOS ###
+*.DS_Store
+.AppleDouble
+.LSOverride

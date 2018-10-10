@@ -1,0 +1,40 @@
+<!-- index -->
+
+<div class="container">
+
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Welcome to My_FavTools</h2>
+
+    <% if flash[:message] %>
+      <div class="flash-message-wrapper">
+        <%= flash[:message] %>
+      </div>
+    <% end %>
+
+    <div class="content">
+
+      <% if logged_in? %>
+        <p>Welcome Back <%= current_user.name %></p>
+
+        <a href="/folders">Folders</a>
+        <a href="/folders/new">New Folders</a>
+        <a href="/logout">Log out</a>
+
+      <% else %>
+        <h3><a href="/signup">Sign Up</a> or <a href="/login">Log In</a> to continue.</h3>
+      <% end %>
+
+    </div>
+<!--
+    <div class="sidebar">
+      <h3>Environment</h3>
+      <ul>
+        <li><b>Ruby:</b> <%= RUBY_VERSION %></li>
+        <li><b>Environment:</b> <%= ENV["RACK_ENV"] %></li>
+        <li><b>Server:</b> <%= @env["SERVER_SOFTWARE"] %></li>
+        <li><b>Port:</b> <%= @env["SERVER_PORT"] %></li>
+      </ul>
+    </div> -->
+
+  </div>
+</div>
