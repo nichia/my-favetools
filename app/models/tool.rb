@@ -14,8 +14,18 @@ class Tool < ActiveRecord::Base
   #ActiveRecord::StatementInvalid: SQLite3::SQLException: ambiguous column name: id: SELECT tools.name FROM "tools" INNER JOIN "folders" ON "folders"."id" = "tools"."
   #Tool.select('tools.name').joins(:folder).where(folders: {privacy: false}).where.not(folders: {user_id: current_user.user_id}).order('id DESC').count
 
-  def self.find_by_privacy_user(privacy, user_id)
-    Tool.joins(:folder).where(folders: {privacy: privacy}).where.not(folders: {user_id: user_id}).order('id DESC')
+  # Class method - find tools that belongs to user_id
+  def self.find_by_user(user_id)
+    Tool.joins(:folder).where(folders: {user_id: user_id}).order('id DESC')
   end
 
+  # Class method - find tools that meets the privacy setting and belongs to user_id
+  def self.find_by_privacy_user(privacy, user_id)
+    Tool.joins(:folder).where(folders: {privacy: privacy, user_id: user_id}).order('id DESC')
+  end
+
+  # Class method - find tools that meets the privacy setting, excluding the users with user_id
+  def self.find_by_privacy_not_user(privacy, user_id)
+    Tool.joins(:folder).where(folders: {privacy: privacy}).where.not(folders: {user_id: user_id}).order('id DESC')
+  end
 end

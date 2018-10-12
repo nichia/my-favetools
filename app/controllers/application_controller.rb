@@ -15,11 +15,7 @@ class ApplicationController < Sinatra::Base
   # GET / route #index action
   get "/" do
     if logged_in?
-      #find non-private tools that does not belong to current user, order by latest tools
-      @tools = Tool.find_by_privacy_user(false, session[:user_id])
-      #binding.pry
-
-      erb :'/tools/index'
+      redirect :'/tools'
     else
       erb :index
     end
@@ -54,7 +50,7 @@ class ApplicationController < Sinatra::Base
 
     def logout
       # reset @current_user
-      remove_instance_variable(@current_user)
+      remove_instance_variable(@current_user) if @current_user
       session.clear
     end
 

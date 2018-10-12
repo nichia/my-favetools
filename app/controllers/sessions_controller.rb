@@ -11,10 +11,9 @@ class SessionsController < ApplicationController
   end
 
   # POST /login route #create action
-  # find the user by username and check that the password matches up. Fill in the session data
+  # find the user by username and check that the password matches up before registering the session data
   post '/login' do
     #raise params.inspect
-
     if params[:name].empty? || params[:password].empty?
       flash.now[:message] = "Username and password cannot be left blank."
       erb :'/sessions/login'
@@ -27,7 +26,7 @@ class SessionsController < ApplicationController
         if @user.authenticate(params[:password])
           # set session
           set_session
-          redirect :"/folders"
+          redirect :"/"
         else
           flash.now[:message] = "Username and password combination do not match, please try again."
           erb :'/sessions/login'
@@ -51,7 +50,6 @@ class SessionsController < ApplicationController
   # create a new instance of user class with a username, email and password. Fill in the session data
   post '/signup' do
     #raise params.inspect
-
     if params[:name].empty? || params[:email].empty? || params[:password].empty?
       flash.now[:message] = "Username, email and password can not be left blank."
       erb :'/sessions/signup'
@@ -80,11 +78,8 @@ class SessionsController < ApplicationController
     if logged_in?
       # clear session
       logout
-      #flash[:message] = "Successfully logged out."
-      redirect :"/login"
-    else
-      redirect :"/"
     end
+    redirect :"/"
   end
 
 end

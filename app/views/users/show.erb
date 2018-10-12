@@ -1,6 +1,5 @@
 <!-- /users/show -->
 <div class="container">
-
   <div class="col-md-8 col-md-offset-2">
     <h2>Welcome to My_FavTools</h2>
 
@@ -10,19 +9,18 @@
       </div>
     <% end %>
 
-    <div class="content">
+    <table>
+      <tr>
+        <th> Name </th>
+        <th> Description </th>
+      </tr>
 
-      <% if logged_in? %>
-        <p>Welcome Back <%= current_user.name %></p>
-
-        <a href="/folders">Folders</a>
-        <a href="/folders/new">New Folders</a>
-        <a href="/logout">Log out</a>
-
-      <% else %>
-        <h3><a href="/signup">Sign Up</a> or <a href="/login">Log In</a> to continue.</h3>
+      <% @tools.each do |tool| %>
+        <tr>
+          <td><a href="/tools/<%= tool.id %>/<%= tool.slug %>"><%= tool.name %></a></td>
+          <td><%= tool.description %></td>
+        </tr>
       <% end %>
-
-    </div> <!-- .content -->
+    <table>
   </div> <!-- .col-md-8 col-md-offset-2 -->
 </div> <!-- .container -->

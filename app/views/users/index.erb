@@ -1,4 +1,5 @@
 <!-- /users/index -->
+
 <div class="container">
 
   <div class="col-md-8 col-md-offset-2">
@@ -10,69 +11,19 @@
       </div>
     <% end %>
 
-    <div class="content">
+      <table>
+        <tr>
+          <th> Username </th>
+          <th> Email </th>
+        </tr>
 
-      <% if logged_in? %>
-        <p>Welcome, <%= current_user.name %> to MyFaveTools</p>
-
-        <table>
+        <% @users.each do |user| %>
           <tr>
-            <th> User Name </th>
-            <th> # Folders made Public </th>
-            <th> View </th>
+            <td><a href="/users/<%= user.slug %>"><%= user.name %></a></td>
+            <td><%= user.email %></td>
           </tr>
+        <% end %>
+      <table>
 
-          <% @users.each do |user| %>
-            <tr>
-              <td><%= user.name %></td>
-              <td><%= user.folders.count %></td>
-              <td><a href="/users/<%= user.slug %>">View</a></td>
-            </tr>
-          <% end %>
-        <table>
-
-        <a href="/folders">Folders</a>
-        <a href="/folders/new">New Folders</a>
-        <a href="/logout">Log out</a>
-
-      <% else %>
-        <h3><a href="/signup">Sign Up</a> or <a href="/login">Log In</a> to continue.</h3>
-      <% end %>
-
-    </div> <!-- .content -->
   </div> <!-- .col-md-8 col-md-offset-2 -->
 </div> <!-- .container -->
-
-
-<table>
-  <tr>
-    <th> User Name </th>
-    <th> # Recipes Contributed </th>
-    <th> View </th>
-  </tr>
-
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= user.name %></td>
-      <td><%= user.recipes.count %></td>
-      <td><a href="/users/<%= user.slug %>">View</a></td>
-    </tr>
-  <% end %>
-<table>
-
-<br></br>
-
-<!-- Link to View Users Recipes-->
-<form action="/recipes" method="get">
-  <input type="submit" id="submit" value="View Your Recipes">
-</form>
-
-<!-- Link to Create New Recipe -->
-<form action="/recipes/new" method="get">
-  <input type="submit" value="New Recipe">
-</form>
-
-<!-- Link to Log Out -->
-<form action="/logout" method="get">
-  <input type="submit" id="logout" value="Log Out">
-</form>
