@@ -1,0 +1,29 @@
+<!-- /tools/index -->
+
+<div class="container">
+
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Welcome to My_FavTools</h2>
+
+    <% if flash[:message] %>
+      <div class="flash-message-wrapper">
+        <%= flash[:message] %>
+      </div>
+    <% end %>
+
+      <table>
+        <tr>
+          <th> Name </th>
+          <th> Description </th>
+        </tr>
+
+        <% @tools.each do |tool| %>
+          <tr>
+            <td><a href="/tools/<%= tool.id %>/<%= tool.slug %>"><%= tool.name %></a></td>
+            <td><%= tool.description %></td>
+          </tr>
+        <% end %>
+      <table>
+
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->

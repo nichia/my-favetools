@@ -1,0 +1,20 @@
+<!-- /tools/show -->
+
+<div class="container">
+
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Welcome to My_FavTools</h2>
+
+    <% if flash[:message] %>
+      <div class="flash-message-wrapper">
+        <%= flash[:message] %>
+      </div>
+    <% end %>
+
+    <p><b>Name:</b> <%= @tool.name %></p>
+    <p><b>Description:</b> <%= @tool.description %></p>
+    <p><b>Website: </b><a href="<%= @tool.url_link %>"  target="_blank"><%= @tool.url_link %></a></p>
+    <p><b>Rating:</b> <%= @tool.rating %></p>
+
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->

@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   # renders a form for logging in
   get '/login' do
     if logged_in?
-      redirect :"/folders"
+      redirect :"/"
     else
       erb :'/sessions/login'
     end
@@ -19,14 +19,14 @@ class SessionsController < ApplicationController
       flash.now[:message] = "Username and password cannot be left blank."
       erb :'/sessions/login'
     else
-      user = User.find_by(name: params[:name])
-      if !user
+      @user = User.find_by(name: params[:name])
+      if !@user
         flash.now[:message] = "Account not found, please try again."
         erb :'/sessions/login'
       else
-        if user.authenticate(params[:password])
+        if @user.authenticate(params[:password])
           # set session
-          session[:user_id] = user.id
+          set_session
           redirect :"/folders"
         else
           flash.now[:message] = "Username and password combination do not match, please try again."
@@ -62,14 +62,14 @@ class SessionsController < ApplicationController
       flash.now[:message] = "An account already exists with this email, please use another email."
       erb :'/sessions/signup'
     else
-      user = User.new
-      user.name = params[:name]
-      user.email = params[:email]
-      user.password = params[:password]
-      user.save
+      @user = User.new
+      @user.name = params[:name]
+      @user.email = params[:email]
+      @user.password = params[:password]
+      @user.save
 
       # set session
-      session[:user_id] = user.id
+      set_session
       redirect :"/folders"
     end
   end
@@ -79,7 +79,7 @@ class SessionsController < ApplicationController
   get '/logout' do
     if logged_in?
       # clear session
-      session.clear
+      logout
       #flash[:message] = "Successfully logged out."
       redirect :"/login"
     else

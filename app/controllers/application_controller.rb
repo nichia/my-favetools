@@ -7,15 +7,23 @@ class ApplicationController < Sinatra::Base
     set :views, 'app/views'
 
     enable :sessions
-    set :session_secret, "22ffe9cb5fda286377df854e56e17bebbaa41969f6e41418c7ecae693952d7a42ab5cbd85d8c061c46dd30dd79fc802d67793
-0dc28bb7195df9c07642f6cc96f"
+    set :session_secret, "22ffe9cb5fda286377df854e56e17bebbaa41969f6e41418c7ecae693952d7a42ab5cbd85d8c061c46dd30dd79fc802d677930dc28bb7195df9c07642f6cc96f"
 
     register Sinatra::Flash
   end #-- configure --
 
   # GET / route #index action
   get "/" do
-    erb :index
+    if logged_in?
+      #find non-private tools that does not belong to current user, order by latest tools
+      @tools = Tool.find_by_privacy_user(false, session[:user_id])
+      #binding.pry
+
+      erb :'/tools/index'
+    else
+      erb :index
+    end
+
   end
 
   # handle 404 errors
@@ -40,7 +48,13 @@ class ApplicationController < Sinatra::Base
       # User.find(session[:user_id])
     end
 
+    def set_session
+      session[:user_id] = @user.id
+    end
+
     def logout
+      # reset @current_user
+      remove_instance_variable(@current_user)
       session.clear
     end
 

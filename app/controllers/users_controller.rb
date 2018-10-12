@@ -1,6 +1,18 @@
 class UsersController < ApplicationController
 
   # GET /users #index action
+  get '/:slug' do
+    if logged_in?
+      @users = User.all.sort_by do |user|
+        user.name
+      end
+      erb :'/users/index'
+    else
+      redirect :"/login"
+    end
+  end
+
+  # GET /users #index action
   get '/users' do
     if logged_in?
       @users = User.all.sort_by do |user|
