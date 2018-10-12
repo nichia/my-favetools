@@ -2,5 +2,10 @@
 
 <header>
   <!-- Nav Bar -->
-  <a href="#">LINK 1</a>
+  <nav>
+    <a href="/">Home</a>
+    <% if logged_in? %>
+      <a href="/<%= current_user.slug %>"><%= current_user.slug %></a>
+    <% end %>
+  </nav>
 </header>
