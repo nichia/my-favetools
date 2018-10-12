@@ -1,1 +1,40 @@
-<h1>new.erb</h1>
+<!-- /folder/new -->
+
+<div class="container">
+
+  <h2>Create Folder</h2>
+  <div class="col-md-8 col-md-offset-2">
+
+    <form action="/folders" method="post">
+      <h2>Welcome to My_FavTools</h2>
+
+      <% if flash[:message] %>
+        <div class="flash-message-wrapper">
+          <%= flash[:message] %>
+        </div>
+      <% end %>
+
+      <label for="name">Name</label>
+      <input id="name" type="text" name="folder[name]" placeholder="Folder name" required/><br/>
+
+      <label for="description">Description</label>
+      <input id="Description" type="text" name="folder[description]" placeholder="Description"><br/>
+
+      <label>Private Folder</label>
+      <input type="checkbox" name="folder[privacy]" value=true> <br/>
+
+      <label>Category</label>
+
+      <label for="category_id">Select a Category</label>
+      <select id="category_id" name="folder[category_id]" type="text">
+        <% @categories.each() do |category| %>
+          <option value="<%= category.id()%>"> <%= category.name() %> </option>
+        <% end %>
+      </select>
+      <br/>
+
+      <input type="submit" value="New Folder">
+
+    </form> <!-- /new folder route -->
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->

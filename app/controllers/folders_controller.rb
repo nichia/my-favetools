@@ -16,6 +16,9 @@ class FoldersController < ApplicationController
   # GET /folders/new route #new action
   get "/folders/new" do
     if logged_in?
+      @categories = Category.all.sort_by do |category|
+        category.name
+      end
       erb :'/folders/new'
     else
       flash[:message] = "You must be logged in to create folders."
@@ -23,10 +26,31 @@ class FoldersController < ApplicationController
     end
   end
 
+  # POST /folders route #create action
+  # find the user by username and check that the password matches up before registering the session data
+  post '/folders' do
+    #raise params.inspect
+    #binding.pry
+
+    if !Folder.find_by(name: params[:folder][:name])
+      @folder = Folder.create(params[:folder])
+      @folder.user = current_user
+      @folder.save
+      # Flash Message when a new song is created
+      flash[:message] = "Successfully created folder."
+      redirect :"/folders/#{@folder.id}/#{@folder.slug}"
+    else
+      # Flash Message when the new song already exists
+      flash[:message].name = "Folder with this name already exists, please use another name."
+      erb :'/folders/new'
+    end
+  end
+
+
   # GET /folders/:id/:slug route # Show action
   # displays one folder based on ID and slug in the url
   get '/folders/:id/:slug' do
-    binding.pry
+    #binding.pry
     if logged_in?
       @folder = Folder.find_by_id(params[:id])
       if @folder && @folder.slug == params[:slug]
