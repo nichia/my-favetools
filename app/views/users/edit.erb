@@ -1,0 +1,29 @@
+<!-- /users/show -->
+<div class="container">
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Welcome to My_FavTools</h2>
+
+    <% if flash[:message] %>
+      <div class="flash-message-wrapper">
+        <%= flash[:message] %>
+      </div>
+    <% end %>
+
+    <form action="/users/<%= @user.slug %>" method="post">
+      <input id="hidden" type="hidden" name="_method" value="patch">
+
+      <label for="username">Username</label>
+      <input id="username" type="text" name="user[name]" placeholder="Username" value="<%= @user.name %>" required/>
+
+      <label for="email">Email</label>
+      <input id="email" type="text" name="user[email]" placeholder="Email" value="<%= @user.email %>" required/>
+
+      <label for="password">Password</label>
+      <input id="password" type="password" name="user[password]" placeholder="Password" value="<%= @user.password %>" required/>
+
+      <input type="submit" value="Save">
+
+    </form> <!-- /edit route -->
+
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->

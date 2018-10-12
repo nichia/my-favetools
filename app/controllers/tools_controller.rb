@@ -1,6 +1,7 @@
 class ToolsController < ApplicationController
 
   # GET /tools route #index action
+  # index page to display all public tools
   get "/tools" do
     if logged_in?
       #find non-private tools that does not belong to current user, order by latest tools
@@ -14,6 +15,7 @@ class ToolsController < ApplicationController
   end
 
   # GET /tools/:id/:slug route # Show action
+  # displays one article based on ID and slug in the url
   get '/tools/:id/:slug' do
     #binding.pry
     if logged_in?

@@ -50,21 +50,17 @@ class SessionsController < ApplicationController
   # create a new instance of user class with a username, email and password. Fill in the session data
   post '/signup' do
     #raise params.inspect
-    if params[:name].empty? || params[:email].empty? || params[:password].empty?
+    if params[:user][:name].empty? || params[:user][:email].empty? || params[:user][:password].empty?
       flash.now[:message] = "Username, email and password can not be left blank."
       erb :'/sessions/signup'
-    elsif User.find_by(name: params[:name])
+    elsif User.find_by(name: params[:user][:name])
       flash.now[:message] = "Username already taken, please use another name."
       erb :'/sessions/signup'
-    elsif User.find_by(email: params[:email])
+    elsif User.find_by(email: params[:user][:email])
       flash.now[:message] = "An account already exists with this email, please use another email."
       erb :'/sessions/signup'
     else
-      @user = User.new
-      @user.name = params[:name]
-      @user.email = params[:email]
-      @user.password = params[:password]
-      @user.save
+      @user = User.create(params[:user])
 
       # set session
       set_session
@@ -73,7 +69,7 @@ class SessionsController < ApplicationController
   end
 
   # GET /logout route #logout action
-  # clears the session data and redirects to the homepage/landing page
+  # clears the session data and redirects to the home page
   get '/logout' do
     if logged_in?
       # clear session

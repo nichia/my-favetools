@@ -11,19 +11,21 @@
       </div>
     <% end %>
 
-      <table>
-        <tr>
-          <th> Username </th>
-          <th> Email </th>
-        </tr>
+    <table>
+      <tr>
+        <th> Username </th>
+        <th> Email </th>
+        <th> Public Folders </th>
+      </tr>
 
-        <% @users.each do |user| %>
-          <tr>
-            <td><a href="/users/<%= user.slug %>"><%= user.name %></a></td>
-            <td><%= user.email %></td>
-          </tr>
-        <% end %>
-      <table>
+      <% @users.each do |user| %>
+        <tr>
+          <td><a href="/users/<%= user.slug %>"><%= user.name %></a></td>
+          <td><%= user.email %></td>
+          <td><%= user.folders.where(privacy: false).count %></td>
+        </tr>
+      <% end %>
+    <table>
 
   </div> <!-- .col-md-8 col-md-offset-2 -->
 </div> <!-- .container -->

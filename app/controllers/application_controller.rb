@@ -13,6 +13,8 @@ class ApplicationController < Sinatra::Base
   end #-- configure --
 
   # GET / route #index action
+  # Home page for user registration, if not logged in or
+  # index page to display all public tools
   get "/" do
     if logged_in?
       redirect :'/tools'
@@ -42,6 +44,10 @@ class ApplicationController < Sinatra::Base
     def current_user
       @current_user ||= User.find_by_id(session[:user_id]) if session[:user_id]
       # User.find(session[:user_id])
+    end
+
+    def reset_current_user
+      @current_user = User.find_by_id(session[:user_id]) if session[:user_id]
     end
 
     def set_session
