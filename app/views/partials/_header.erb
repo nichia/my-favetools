@@ -5,7 +5,11 @@
   <nav>
     <a href="/">Home</a>
     <% if logged_in? %>
-      <a href="/<%= current_user.slug %>"><%= current_user.slug %></a>
+      <a href="/users/<%= current_user.slug %>"><%= current_user.slug %></a>
+      <a href="/logout">Log out</a>
+    <% else %>
+      <a href="/signup">Sign Up</a>
+      <a href="/login">Log In</a>
     <% end %>
   </nav>
 </header>
