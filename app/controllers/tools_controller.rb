@@ -9,7 +9,43 @@ class ToolsController < ApplicationController
 
       erb :'/tools/index'
     else
-      flash[:message] = "You must be logged in to view the Tools."
+      flash[:message] = "You must be logged in to view the tools."
+      redirect :"/login"
+    end
+  end
+
+  # GET /tools/new route #new action
+  get "/tools/new" do
+    if logged_in?
+      @folders = Folder.where(user_id: current_user).sort_by do |folder|
+        folder.name
+      end
+      erb :'/tools/new'
+    else
+      flash[:message] = "You must be logged in to create tools."
+      redirect :"/login"
+    end
+  end
+
+  # POST /tools route #create action
+  # create new tool
+  post '/tools' do
+    #raise params.inspect
+    #binding.pry
+    if logged_in?
+      tool = Tool.find_by(name: params[:tool][:name])
+      if tool && tool.folder_id == params[:tool][:folder_id]
+        # Flash Message when the new tool name already exists for this folder
+        flash[:message] = "You already have a tool with this name for this folder, please use another name."
+        erb :'/folders/new'
+      else
+        @tool = Tool.create(params[:tool])
+        # Flash Message when a new tool is created
+        flash[:message] = "Successfully created a tool."
+        redirect :"/tools/#{@tool.id}/#{@tool.slug}"
+      end
+    else
+      flash[:message] = "You must be logged in to create tools."
       redirect :"/login"
     end
   end

@@ -1,0 +1,41 @@
+<!-- /tools/new -->
+
+<div class="container">
+
+  <h2>Create Folder</h2>
+  <div class="col-md-8 col-md-offset-2">
+
+    <form action="/tools" method="post">
+      <h2>Welcome to My_FavTools</h2>
+
+      <% if flash[:message] %>
+        <div class="flash-message-wrapper">
+          <%= flash[:message] %>
+        </div>
+      <% end %>
+
+      <label for="name">Name</label>
+      <input id="name" type="text" name="tool[name]" placeholder="Tool name" required/><br/>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="tool[description]" placeholder="Description" rows="2" cols="100"></textarea></p>
+
+      <label for="url_link">Description</label>
+      <input id="url_link" type="text" name="tool[url_link]" placeholder="url_link"><br/>
+
+      <label for="rating">Description</label>
+      <input id="rating" type="number" name="tool[rating]" placeholder="0 to 5" min="0" max="5"><br/>
+
+      <label for="folder_id">Select a Folder</label>
+      <select id="folder_id" name="tool[folder_id]" type="text">
+        <% @folders.each() do |folder| %>
+          <option value="<%= folder.id()%>"> <%= folder.name() %> </option>
+        <% end %>
+      </select>
+      <br/>
+
+      <input type="submit" value="New Folder">
+
+    </form> <!-- /new tool route -->
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->
