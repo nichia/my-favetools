@@ -1,0 +1,27 @@
+<!-- /folder/show -->
+
+<div class="container">
+
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Welcome to My_FavTools</h2>
+
+    <% if flash[:message] %>
+      <div class="flash-message-wrapper">
+        <%= flash[:message] %>
+      </div>
+    <% end %>
+
+    <p><b>Name:</b> <%= @folder.name %></p>
+    <p><b>Category:</b> <%= @folder.category.name %></p>
+    <p><b>Description:</b> <%= @folder.description %></p>
+    <p><b>owner:</b> <%= @folder.user.name %></p>
+    <p><b>Private/public:</b>
+      <% if @folder.privacy %>
+        Private
+      <% else %>
+        Public
+      <% end %>
+    </p>
+
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->

@@ -37,7 +37,7 @@
 @folder6 = @user3.folders.create(name: "Destinations", description: "Places I'd like to visit...", privacy: false, category: @cat19)
 @folder7 = @user3.folders.create(name: "Drinks on Me", description: "Alcoholic and non-alcoholic", privacy: false, category: @cat6)
 @folder8 = @user4.folders.create(name: "Organization & Tips", description: "Getting organized and hosehold tips", privacy: false, category: @cat10)
-@folder9 = @user4.folders.create(name: "Fun", description: "Fun stuff :)", privacy: false)
+@folder9 = @user4.folders.create(name: "Fun", description: "Fun stuff :)", privacy: false, category: @cat16)
 @folder10 = @user5.folders.create(name: "Favorite Flatiron Videos", description: "Favorite videos shared by Avi", privacy: false, category: @cat8)
 @folder11 = @user5.folders.create(name: "Ruby Docs", description: "Ruby related documentations...", privacy: false, category: @cat8)
 @folder12 = @user5.folders.create(name: "Tecnology Podcasts", description: "Coding, technology and ruby podcasts", privacy: false, category: @cat8)

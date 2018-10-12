@@ -15,7 +15,7 @@ class ToolsController < ApplicationController
   end
 
   # GET /tools/:id/:slug route # Show action
-  # displays one article based on ID and slug in the url
+  # displays one tool based on ID and slug in the url
   get '/tools/:id/:slug' do
     #binding.pry
     if logged_in?
@@ -27,7 +27,7 @@ class ToolsController < ApplicationController
         redirect :"/tools"
       end
     else
-      flash[:message] = "You must be logged in to view Tool's information."
+      flash[:message] = "You must be logged in to view the Tool information."
       redirect :"/login"
     end
   end

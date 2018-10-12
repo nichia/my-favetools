@@ -1,1 +1,40 @@
-<h1>Index.erb</h1>
+<!-- /folders/index -->
+
+<div class="container">
+
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Welcome to My_FavTools</h2>
+
+    <% if flash[:message] %>
+      <div class="flash-message-wrapper">
+        <%= flash[:message] %>
+      </div>
+    <% end %>
+
+    <table>
+      <tr>
+        <th> Name </th>
+        <th> Category </th>
+        <th> Description </th>
+        <th> Owner </th>
+        <th> Private/public </th>
+      </tr>
+
+      <% @folders.each do |folder| %>
+        <tr>
+          <td><a href="/folders/<%= folder.id %>/<%= folder.slug %>"><%= folder.name %></a></td>
+          <td><%= folder.category.name %></td>
+          <td><%= folder.description %></td>
+          <td><%= folder.user.name %></td>
+          <td><% if folder.privacy %>
+                Private
+              <% else %>
+                Public
+              <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <table>
+
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->
