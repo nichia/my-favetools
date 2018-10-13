@@ -15,15 +15,10 @@
     <p><b>Description:</b> <%= @folder.description %></p>
     <p><b>Category:</b> <%= @folder.category.name %></p>
     <p><b>owner:</b> <%= @folder.user.name %></p>
-    <!-- <p><b>Private:</b> <input id="privacy" type="checkbox" name="folder[privacy]" value=true></p> -->
 
-    <p><b>Private:</b>
-      <% if @folder.privacy %>
-        Yes
-      <% else %>
-        No
-      <% end %>
-    </p>
+    <p><b>Private Folder:</b>
+    <input type="checkbox" <% if @folder.privacy %> checked <% end %>></p>
+
     <p><b>Tools:</b> <%= @folder.tools.count %></p>
 
   </div> <!-- .col-md-8 col-md-offset-2 -->
