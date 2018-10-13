@@ -19,11 +19,15 @@
 
   </div> <!-- .col-md-8 col-md-offset-2 -->
 
-  <!-- Form to Delete Tool -->
+  <!-- Form to Edit / Delete Tool -->
   <% if @tool.folder.user == current_user %>
-    <form action="/tools/<%= @tool.id %>/<%= @tool.slug %>/delete" method="post">
+    <a href="/tools/<%= @tool.id %>/<%= @tool.slug %>/edit">Edit</a>
+
+    <br><br/>
+
+    <form action="/tools/<%= @tool.id %>/<%= @tool.slug %>" method="post">
       <input id="hidden" type="hidden" name="_method" value="delete">
-      <input type="submit" id="delete" value="Delete Tool">
+      <input type="submit" id="delete" value="Delete">
     </form>
   <% end %>
 

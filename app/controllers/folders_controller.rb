@@ -30,13 +30,13 @@ class FoldersController < ApplicationController
   # create new folder
   post '/folders' do
     #raise params.inspect
-    binding.pry
+    #binding.pry
     if logged_in?
       folder = Folder.find_by(name: params[:folder][:name])
       if folder && folder.user == current_user
         # Flash Message when the new folder name already exists for current_user
         flash[:message].name = "You already have a folder with this name, please use another name."
-        erb :'/folders/new'
+        redirect :"/folders/new"
       else
         @folder = Folder.create(params[:folder])
         @folder.user = current_user
@@ -69,14 +69,64 @@ class FoldersController < ApplicationController
     end
   end
 
-  # DELETE /folders/:slug/delete route #delete action
-  delete '/folders/:id/:slug/delete' do
+  # GET /folders/:id/:slug/edit route #edit action
+  # displays one folder based on ID and slug in the url for editing
+  get '/folders/:id/:slug/edit' do
+    if logged_in?
+      @folder = Folder.find_by_id(params[:id])
+      if @folder && @folder.slug == params[:slug]
+        if @folder.user == current_user
+          @categories = Category.all.sort_by do |category|
+            category.name
+          end
+          erb :'/folders/edit'
+        else
+          flash[:message] = "You must be the folder owner to edit this record."
+          redirect :"/folders/#{@folder.id}/#{@folder.slug}"
+        end
+      else
+        flash.now[:message] = "Folder's id and name combination not found, please try again."
+        redirect :"/folders"
+      end
+    else
+      flash[:message] = "You must be logged in to edit folders."
+      redirect :"/login"
+    end
+  end
+
+  # PATCH /folders/:id/:slug route #update action
+  # modifies an existing folder based on ID and slug in the url
+  patch '/folders/:id/:slug' do
+    binding.pry
+    if logged_in?
+      if params[:folder][:name].empty?
+        flash[:message] = "Folder name cannot be left blank."
+        redirect :"/folders/#{@folder.id}/#{@folder.slug}/edit"
+      else
+        @folder = Folder.find_by_id(params[:id])
+        if @folder && @folder.user == current_user
+          @folder.update(params[:folder])
+          flash[:message] = "You've successfully updated the folder \'#{params[:slug]}\'."
+          redirect :"/folders/#{@folder.id}/#{@folder.slug}"
+        else
+          flash[:message] = "You must be the folder owner to update this record."
+          redirect :"/folders/#{@folder.id}/#{@folder.slug}"
+        end
+      end
+    else
+      flash[:message] = "You must be logged in to update a folder."
+      redirect :"/login"
+    end
+  end
+
+  # DELETE /folders/:slug route #delete action
+  delete '/folders/:id/:slug' do
     #binding.pry
     if logged_in?
       @folder = Folder.find_by_id(params[:id])
       if @folder && @folder.user == current_user
         @folder.delete
-        flash[:message] = "You've successfully deleted your folder #{params[:slug]}!"
+        flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'."
         redirect :"/folders"
       else
         flash[:message] = "You must be the folder owner to delete this record."

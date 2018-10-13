@@ -1,0 +1,49 @@
+<!-- /folders/edit -->
+
+<div class="container">
+
+  <h2>Edit Folders</h2>
+  <div class="col-md-8 col-md-offset-2">
+
+    <form action="/folders/<%= @folder.id %>/<%= @folder.slug %>" method="post">
+      <input id="hidden" type="hidden" name="_method" value="patch"/>
+      <h2>Welcome to My_FavTools</h2>
+
+      <% if flash[:message] %>
+        <div class="flash-message-wrapper">
+          <%= flash[:message] %>
+        </div>
+      <% end %>
+
+      <label for="name">Name</label>
+      <input id="name" type="text" name="folder[name]" value="<%= @folder.name %>" required/><br/>
+
+      <label for="description">Description</label>
+      <input id="description" type="text" name="folder[description]" value="<% @folder.description %>"><br/>
+
+      <label for="category_id">Select a Category</label>
+      <select id="category_id" type="text" name="folder[category_id]">
+        <% @categories.each() do |category| %>
+          <% if @folder.category_id == category.id() %>
+            <option value="<%= category.id()%>" selected> <%= category.name() %> </option>
+          <% else %>
+            <option value="<%= category.id()%>"> <%= category.name() %> </option>
+          <% end %>
+        <% end %>
+      </select>
+
+      <br/>
+
+      <!-- This is public folder unless user checks the box to flag it private -->
+      <label for="privacy">Private Folder</label>
+      <% if @folder.privacy == true %>
+        <input id="privacy" type="checkbox" name="folder[privacy]" value=true checked><br/>
+      <% else %>
+        <input id="privacy" type="checkbox" name="folder[privacy]" value=true><br/>
+      <% end %>
+
+      <input type="submit" id="submit" value="Update">
+
+    </form> <!-- /new folder route -->
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->

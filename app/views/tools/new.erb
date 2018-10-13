@@ -30,7 +30,7 @@
         <label for="folder_id">Select a Folder</label>
         <select id="folder_id" name="tool[folder_id]" type="text">
           <% @folders.each() do |folder| %>
-            <option value="<%= folder.id()%>"> <%= folder.name() %> </option>
+            <option value="<%= folder.id() %>"> <%= folder.name() %> </option>
           <% end %>
         </select><br/>
 
@@ -38,7 +38,7 @@
         <input id="new_folder" type="text" name="folder[name]"></input>
       </fieldset><br/>
 
-      <input type="submit" value="New Folder">
+      <input type="submit" value="New Tool">
 
     </form> <!-- /new tool route -->
   </div> <!-- .col-md-8 col-md-offset-2 -->

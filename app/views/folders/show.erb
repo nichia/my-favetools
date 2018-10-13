@@ -13,7 +13,13 @@
 
     <p><b>Name:</b> <%= @folder.name %></p>
     <p><b>Description:</b> <%= @folder.description %></p>
-    <p><b>Category:</b> <%= @folder.category.name %></p>
+    <p><b>Category:</b>
+      <% if @folder.category_id %>
+        <%= @folder.category.name %>
+      <% else %>
+        underfined
+      <% end %>
+    </p>
     <p><b>owner:</b> <%= @folder.user.name %></p>
 
     <p><b>Private Folder:</b>
@@ -23,9 +29,13 @@
 
   </div> <!-- .col-md-8 col-md-offset-2 -->
 
-  <!-- Form to Delete Folder -->
+  <!-- Form to Edit / Delete Folder -->
   <% if @folder.user == current_user %>
-    <form action="/folders/<%= @folder.id %>/<%= @folder.slug %>/delete" method="post">
+    <a href="/folders/<%= @folder.id %>/<%= @folder.slug %>/edit">Edit</a>
+
+    <br><br/>
+
+    <form action="/folders/<%= @folder.id %>/<%= @folder.slug %>" method="post">
       <input id="hidden" type="hidden" name="_method" value="delete">
       <input type="submit" id="delete" value="Delete Folder">
     </form>

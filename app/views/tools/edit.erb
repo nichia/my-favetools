@@ -1,0 +1,52 @@
+<!-- /tools/edit -->
+
+<div class="container">
+
+  <h2>Edit Tools</h2>
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Welcome to My_FavTools</h2>
+
+    <% if flash[:message] %>
+      <div class="flash-message-wrapper">
+        <%= flash[:message] %>
+      </div>
+    <% end %>
+
+    <form action="/tools/<%= @tool.id %>/<%= @tool.slug %>" method="post">
+      <input id="hidden" type="hidden" name="_method" value="patch"/>
+
+      <label for="name">Name</label>
+      <input id="name" type="text" name="tool[name]" value="<%= @tool.name %>" required/><br/>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="tool[description]" value="<%= @tool.description %>" rows="2" cols="100"></textarea></p>
+
+      <label for="url_link">Website</label>
+      <input id="url_link" type="text" name="tool[url_link]" value="<%= @tool.url_link %>"/><br/>
+
+      <label for="rating">Your Rating</label>
+      <input id="rating" type="number" name="tool[rating]" value="<%= @tool.rating %>" min="0" max="5"/><br/>
+
+      <fieldset>
+        <label for="folder_id">Select a Folder</label>
+        <select id="folder_id" name="tool[folder_id]" type="text">
+          <% @folders.each() do |folder| %>
+            <% if @tool.folder_id == folder.id() %>
+              <option value="<%= folder.id() %>" selected><%= folder.name() %> </option>
+            <% else %>
+              <option value="<%= folder.id() %>"><%= folder.name() %> </option>
+            <% end %>
+          <% end %>
+        </select><br/>
+
+        <label for="new_folder">or Create New Folder</label>
+        <input id="new_folder" type="text" name="folder[name]"/>
+      </fieldset><br/>
+
+      </br>
+
+      <input type="submit" id="submit" value="Update">
+    </form>
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+
+</div> <!-- .container -->
