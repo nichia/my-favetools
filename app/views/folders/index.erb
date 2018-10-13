@@ -14,24 +14,28 @@
     <table>
       <tr>
         <th> Name </th>
-        <th> Category </th>
         <th> Description </th>
+        <th> Category </th>
         <th> Owner </th>
-        <th> Private/public </th>
+        <th> Private </th>
+        <th> Tools </th>
       </tr>
 
       <% @folders.each do |folder| %>
         <tr>
           <td><a href="/folders/<%= folder.id %>/<%= folder.slug %>"><%= folder.name %></a></td>
-          <td><%= folder.category.name %></td>
           <td><%= folder.description %></td>
+          <td><%= folder.category.name %></td>
           <td><%= folder.user.name %></td>
+          <!-- <td><input id="privacy" type="checkbox" name="folder[privacy]" value=true></td> -->
+
           <td><% if folder.privacy %>
-                Private
+                Yes
               <% else %>
-                Public
+                No
               <% end %>
           </td>
+          <td><%= folder.tools.count %></td>
         </tr>
       <% end %>
     <table>

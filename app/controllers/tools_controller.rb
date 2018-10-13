@@ -68,4 +68,23 @@ class ToolsController < ApplicationController
     end
   end
 
+
+  # DELETE /tools/:slug/delete route #delete action
+  delete '/tools/:id/:slug/delete' do
+    #binding.pry
+    if logged_in?
+      @tool = Tool.find_by_id(params[:id])
+      if @tool && @tool.folder.user == current_user
+        @tool.delete
+        flash[:message] = "You've successfully deleted your tool #{params[:slug]}!"
+        redirect :"/users/#{current_user.slug}"
+      else
+        flash[:message] = "You must be the tool owner to delete this record."
+        redirect :"/tools/#{@tool.id}/#{@tool.slug}"
+      end
+    else
+      flash[:message] = "You must be logged in to delete a tool."
+      redirect :"/login"
+    end
+  end
 end

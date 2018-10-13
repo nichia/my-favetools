@@ -20,16 +20,19 @@
       <label for="description">Description</label>
       <input id="description" type="text" name="folder[description]" placeholder="Description"><br/>
 
-      <label for="privacy">Private Folder</label>
-      <input id="privacy" type="checkbox" name="folder[privacy]" value=true> <br/>
-
       <label for="category_id">Select a Category</label>
       <select id="category_id" type="text" name="folder[category_id]">
         <% @categories.each() do |category| %>
           <option value="<%= category.id()%>"> <%= category.name() %> </option>
         <% end %>
       </select>
+
       <br/>
+
+      <!-- privacy checkbox - default is unchecked -->
+      <!-- This is public folder unless user checks the box to flag it private -->
+      <label for="privacy">Private Folder</label>
+      <input id="privacy" type="checkbox" name="folder[privacy]" value=true><br/>
 
       <input type="submit" value="New Folder">
 

@@ -30,7 +30,7 @@ class FoldersController < ApplicationController
   # create new folder
   post '/folders' do
     #raise params.inspect
-    #binding.pry
+    binding.pry
     if logged_in?
       folder = Folder.find_by(name: params[:folder][:name])
       if folder && folder.user == current_user
@@ -51,7 +51,7 @@ class FoldersController < ApplicationController
     end
   end
 
-  # GET /folders/:id/:slug route # Show action
+  # GET /folders/:id/:slug route #show action
   # displays one folder based on ID and slug in the url
   get '/folders/:id/:slug' do
     #binding.pry
@@ -69,4 +69,22 @@ class FoldersController < ApplicationController
     end
   end
 
+  # DELETE /folders/:slug/delete route #delete action
+  delete '/folders/:id/:slug/delete' do
+    #binding.pry
+    if logged_in?
+      @folder = Folder.find_by_id(params[:id])
+      if @folder && @folder.user == current_user
+        @folder.delete
+        flash[:message] = "You've successfully deleted your folder #{params[:slug]}!"
+        redirect :"/folders"
+      else
+        flash[:message] = "You must be the folder owner to delete this record."
+        redirect :"/folders/#{@folder.id}/#{@folder.slug}"
+      end
+    else
+      flash[:message] = "You must be logged in to delete a folder."
+      redirect :"/login"
+    end
+  end
 end

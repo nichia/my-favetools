@@ -12,16 +12,28 @@
     <% end %>
 
     <p><b>Name:</b> <%= @folder.name %></p>
-    <p><b>Category:</b> <%= @folder.category.name %></p>
     <p><b>Description:</b> <%= @folder.description %></p>
+    <p><b>Category:</b> <%= @folder.category.name %></p>
     <p><b>owner:</b> <%= @folder.user.name %></p>
-    <p><b>Private/public:</b>
+    <!-- <p><b>Private:</b> <input id="privacy" type="checkbox" name="folder[privacy]" value=true></p> -->
+
+    <p><b>Private:</b>
       <% if @folder.privacy %>
-        Private
+        Yes
       <% else %>
-        Public
+        No
       <% end %>
     </p>
+    <p><b>Tools:</b> <%= @folder.tools.count %></p>
 
   </div> <!-- .col-md-8 col-md-offset-2 -->
+
+  <!-- Form to Delete Folder -->
+  <% if @folder.user == current_user %>
+    <form action="/folders/<%= @folder.id %>/<%= @folder.slug %>/delete" method="post">
+      <input id="hidden" type="hidden" name="_method" value="delete">
+      <input type="submit" id="delete" value="Delete Folder">
+    </form>
+  <% end %>
+
 </div> <!-- .container -->
