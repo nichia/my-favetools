@@ -1,7 +1,7 @@
 class Folder < ActiveRecord::Base
   belongs_to :user
   belongs_to :category
-  has_many :tools, dependent: :destroy
+  has_many :items, dependent: :destroy
 
   include Slugifiable::InstanceMethods
   extend Slugifiable::ClassMethods

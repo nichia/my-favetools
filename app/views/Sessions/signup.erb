@@ -1,16 +1,15 @@
 <!-- /sessions/signup -->
 
-<h1>Welcome to My FavTools</h1>
 <div class="container">
+
   <% if flash[:message] %>
     <div class="flash-message-wrapper">
       <%= flash[:message] %>
     </div>
   <% end %>
 
-  <h2>Sign up</h2>
   <div class="col-md-8 col-md-offset-2">
-
+    <h2>Sign up</h2>
     <form action="/signup" method="post">
 
       <label for="username">Username</label>

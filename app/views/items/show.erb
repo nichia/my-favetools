@@ -1,0 +1,36 @@
+<!-- /items/show -->
+
+<div class="container">
+
+  <% if flash[:message] %>
+    <div class="flash-message-wrapper">
+      <%= flash[:message] %>
+    </div>
+  <% end %>
+
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Item</h2>
+    <p><b>Name:</b> <%= @item.name %></p>
+    <p><b>Description:</b> <%= @item.description %></p>
+    <p><b>Website: </b><a href="<%= @item.url_link %>"  target="_blank"><%= @item.url_link %></a></p>
+    <p><b>Rating:</b> <%= @item.rating %></p>
+    <p><b>Folder:</b> <%= @item.folder.name %></p>
+
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+
+  <!-- Form to Edit / Delete Item -->
+  <% if @item.folder.user == current_user %>
+    <a href="/items/<%= @item.id %>/<%= @item.slug %>/edit">Edit</a>
+
+    <br><br/>
+
+    <form action="/items/<%= @item.id %>/<%= @item.slug %>" method="post">
+      <input id="hidden" type="hidden" name="_method" value="delete">
+      <input type="submit" id="delete" value="Delete">
+    </form>
+  <% else %>
+    <!-- Link to Copy this Item by creating a new Item base on this version -->
+    <a href="/items/new/<%= @item.id %>">Copy Item</a>
+  <% end %>
+
+</div> <!-- .container -->

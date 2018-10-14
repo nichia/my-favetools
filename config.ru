@@ -9,5 +9,5 @@ use Rack::MethodOverride
 use SessionsController
 use UsersController
 use FoldersController
-use ToolsController
+use ItemsController
 run ApplicationController

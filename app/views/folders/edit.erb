@@ -2,18 +2,16 @@
 
 <div class="container">
 
-  <h2>Edit Folders</h2>
-  <div class="col-md-8 col-md-offset-2">
+  <% if flash[:message] %>
+    <div class="flash-message-wrapper">
+      <%= flash[:message] %>
+    </div>
+  <% end %>
 
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Edit Folders</h2>
     <form action="/folders/<%= @folder.id %>/<%= @folder.slug %>" method="post">
       <input id="hidden" type="hidden" name="_method" value="patch"/>
-      <h2>Welcome to My_FavTools</h2>
-
-      <% if flash[:message] %>
-        <div class="flash-message-wrapper">
-          <%= flash[:message] %>
-        </div>
-      <% end %>
 
       <label for="name">Name</label>
       <input id="name" type="text" name="folder[name]" value="<%= @folder.name %>" required/><br/>
@@ -44,6 +42,6 @@
 
       <input type="submit" id="submit" value="Update">
 
-    </form> <!-- /new folder route -->
+    </form> <!-- /edit folder route -->
   </div> <!-- .col-md-8 col-md-offset-2 -->
 </div> <!-- .container -->

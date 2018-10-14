@@ -1,0 +1,34 @@
+<!-- /items/index -->
+
+<div class="container">
+
+  <% if flash[:message] %>
+    <div class="flash-message-wrapper">
+      <%= flash[:message] %>
+    </div>
+  <% end %>
+
+  <div class="col-md-8 col-md-offset-2">
+    <% if path_info.match(/\A\/users\//) %>
+      <% p_user_folder = path_info.split("/") %>
+      <h2><a href="/users/<%= p_user_folder[2] %>"><%= p_user_folder[-2] %></a> <%= p_user_folder[-1] %>: Items</h2>
+    <% else %>
+      <h2>Items</h2>
+    <% end %>
+
+    <table>
+      <tr>
+        <th> Name </th>
+        <th> Description </th>
+      </tr>
+
+      <% @items.each do |item| %>
+        <tr>
+          <td><a href="/items/<%= item.id %>/<%= item.slug %>"><%= item.name %></a></td>
+          <td><%= item.description %></td>
+        </tr>
+      <% end %>
+    <table>
+
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->

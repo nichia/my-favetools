@@ -2,17 +2,15 @@
 
 <div class="container">
 
-  <h2>Create Folder</h2>
+  <% if flash[:message] %>
+    <div class="flash-message-wrapper">
+      <%= flash[:message] %>
+    </div>
+  <% end %>
+
   <div class="col-md-8 col-md-offset-2">
-
+    <h2>Create Folder</h2>
     <form action="/folders" method="post">
-      <h2>Welcome to My_FavTools</h2>
-
-      <% if flash[:message] %>
-        <div class="flash-message-wrapper">
-          <%= flash[:message] %>
-        </div>
-      <% end %>
 
       <label for="name">Name</label>
       <input id="name" type="text" name="folder[name]" placeholder="Folder name" required/><br/>

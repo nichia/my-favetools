@@ -19,7 +19,7 @@
 #### Associations
 -	belongs to user
 -	belongs to category
--	has many tools
+-	has many items
 
 ### Categories
 #### Attributes
@@ -28,7 +28,7 @@
 -	has many folders
 -	has many users through folders
 
-### Tools
+### Items
 #### Attributes
 -	name
 -	description

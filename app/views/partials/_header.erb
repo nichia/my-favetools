@@ -7,9 +7,9 @@
     <% if logged_in? %>
       <a href="/users/<%= current_user.slug %>"><%= current_user.slug %></a>
       <a href="/folders">Folders</a>
-      <a href="/tools">Tools</a>
+      <a href="/items">Items</a>
       <a href="/users">Users</a>
-      <a href="/users/<%= current_user.slug %>/edit">Settings</a>
+      <a href="/settings/<%= current_user.slug %>">Settings</a>
       <a href="/logout">Log out</a>
     <% else %>
       <a href="/signup">Sign Up</a>
@@ -19,20 +19,15 @@
 
   <!-- right-hand side menu -->
   <div class="right menu">
-    <h2>Welcome to myFavTools</h2>
+    <h2>Welcome to myFaveTools</h2>
 
     <% if logged_in? %>
-      <% if path_info.match(/\A\/users\//) %>
-        <% p_user = path_info.split("/users/").last %>
-        <h3>users: <%= p_user %> - <%= path_info %><h3>
-      <% elsif path_info.match(/\A\/folders\//) %>
-        <% p_folder = path_info.split("/folders/").last %>
-        <h3>folders: <%= p_folder %> - <%= path_info %><h3>
-      <% elsif path_info.match(/\A\/tools\//) %>
-        <% p_tool = path_info.split("/tools/").last %>
-        <h3>tools: <%= p_tool %> - <%= path_info %><h3>
-      <% else %>
-        <h3>Public Path: <%= path_info %><h3>
+      <% if !path_info.match(/\/folders\/new/) %>
+        <a href="/folders/new">New Folder</a>
+      <% end %>
+
+      <% if !path_info.match(/\/items\/new/) %>
+        <a href="/items/new">New Item</a>
       <% end %>
     <% end %>
   </div>

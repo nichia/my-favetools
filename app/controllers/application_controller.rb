@@ -14,10 +14,10 @@ class ApplicationController < Sinatra::Base
 
   # GET / route #index action
   # Home page for user registration, if not logged in or
-  # index page to display all public tools
+  # index page to display all public items
   get "/" do
     if logged_in?
-      redirect :'/tools'
+      redirect :'/items'
     else
       erb :index
     end

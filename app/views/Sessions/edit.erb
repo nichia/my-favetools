@@ -1,7 +1,7 @@
-<!-- /users/show -->
+<!-- /sessions/edit -->
 <div class="container">
   <div class="col-md-8 col-md-offset-2">
-    <h2>Edit User settings</h2>
+    <h2>Edit User account settings</h2>
 
     <% if flash[:message] %>
       <div class="flash-message-wrapper">
@@ -9,7 +9,7 @@
       </div>
     <% end %>
 
-    <form action="/users/<%= @user.slug %>" method="post">
+    <form action="/settings/<%= @user.slug %>" method="post">
       <input id="hidden" type="hidden" name="_method" value="patch">
 
       <label for="username">Username</label>

@@ -1,0 +1,43 @@
+<!-- /items/new -->
+
+<div class="container">
+
+  <% if flash[:message] %>
+    <div class="flash-message-wrapper">
+      <%= flash[:message] %>
+    </div>
+  <% end %>
+
+  <div class="col-md-8 col-md-offset-2">
+    <h2>Create Item</h2>
+    <form action="/items" method="post">
+
+      <label for="name">Name</label>
+      <input id="name" type="text" name="item[name]" placeholder="Item name" required/><br/>
+
+      <label for="description">Description</label>
+      <textarea id="description" name="item[description]" placeholder="Description" rows="2" cols="100"></textarea></p>
+
+      <label for="url_link">Website</label>
+      <input id="url_link" type="text" name="item[url_link]" placeholder="url_link"><br/>
+
+      <label for="rating">Your Rating</label>
+      <input id="rating" type="number" name="item[rating]" placeholder="0 to 5" min="0" max="5"><br/>
+
+      <fieldset>
+        <label for="folder_id">Select a Folder</label>
+        <select id="folder_id" name="item[folder_id]" type="text">
+          <% @folders.each() do |folder| %>
+            <option value="<%= folder.id() %>"> <%= folder.name() %> </option>
+          <% end %>
+        </select><br/>
+
+        <label for="new_folder">or Create New Folder</label>
+        <input id="new_folder" type="text" name="folder[name]"></input>
+      </fieldset><br/>
+
+      <input type="submit" value="New Item">
+
+    </form> <!-- /new item route -->
+  </div> <!-- .col-md-8 col-md-offset-2 -->
+</div> <!-- .container -->

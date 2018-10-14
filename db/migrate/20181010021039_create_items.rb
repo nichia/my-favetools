@@ -1,6 +1,6 @@
-class CreateTools < ActiveRecord::Migration
+class CreateItems < ActiveRecord::Migration
   def change
-    create_table :tools do |t|
+    create_table :items do |t|
       t.string :name
       t.text :description
       t.string :url_link

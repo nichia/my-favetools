@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(version: 20181010021039) do
     t.datetime "updated_at",                  null: false
   end
 
-  create_table "tools", force: :cascade do |t|
+  create_table "items", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
     t.string   "url_link"

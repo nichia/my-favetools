@@ -2,15 +2,14 @@
 
 <div class="container">
 
+  <% if flash[:message] %>
+    <div class="flash-message-wrapper">
+      <%= flash[:message] %>
+    </div>
+  <% end %>
+
   <div class="col-md-8 col-md-offset-2">
     <h2>Folder</h2>
-
-    <% if flash[:message] %>
-      <div class="flash-message-wrapper">
-        <%= flash[:message] %>
-      </div>
-    <% end %>
-
     <p><b>Name:</b> <%= @folder.name %></p>
     <p><b>Description:</b> <%= @folder.description %></p>
     <p><b>Category:</b>
@@ -25,7 +24,7 @@
     <p><b>Private Folder:</b>
     <input type="checkbox" <% if @folder.privacy %> checked <% end %>></p>
 
-    <p><b>Tools:</b> <%= @folder.tools.count %></p>
+    <p><b>Items:</b> <%= @folder.items.count %></p>
 
   </div> <!-- .col-md-8 col-md-offset-2 -->
 
