@@ -6,11 +6,35 @@
     <a href="/">Home</a>
     <% if logged_in? %>
       <a href="/users/<%= current_user.slug %>"><%= current_user.slug %></a>
-      <a href="/users/<%= current_user.slug %>/edit">Account settings</a>
+      <a href="/folders">Folders</a>
+      <a href="/tools">Tools</a>
+      <a href="/users">Users</a>
+      <a href="/users/<%= current_user.slug %>/edit">Settings</a>
       <a href="/logout">Log out</a>
     <% else %>
       <a href="/signup">Sign Up</a>
       <a href="/login">Log In</a>
     <% end %>
   </nav>
+
+  <!-- right-hand side menu -->
+  <div class="right menu">
+    <h2>Welcome to myFavTools</h2>
+
+    <% if logged_in? %>
+      <% if path_info.match(/\A\/users\//) %>
+        <% p_user = path_info.split("/users/").last %>
+        <h3>users: <%= p_user %> - <%= path_info %><h3>
+      <% elsif path_info.match(/\A\/folders\//) %>
+        <% p_folder = path_info.split("/folders/").last %>
+        <h3>folders: <%= p_folder %> - <%= path_info %><h3>
+      <% elsif path_info.match(/\A\/tools\//) %>
+        <% p_tool = path_info.split("/tools/").last %>
+        <h3>tools: <%= p_tool %> - <%= path_info %><h3>
+      <% else %>
+        <h3>Public Path: <%= path_info %><h3>
+      <% end %>
+    <% end %>
+  </div>
+
 </header>

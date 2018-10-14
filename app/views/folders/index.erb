@@ -3,7 +3,7 @@
 <div class="container">
 
   <div class="col-md-8 col-md-offset-2">
-    <h2>Welcome to My_FavTools</h2>
+    <h2>Folders</h2>
 
     <% if flash[:message] %>
       <div class="flash-message-wrapper">
@@ -32,7 +32,7 @@
           <% end %>
           <td><%= folder.user.name %></td>
           <td><input type="checkbox" <% if folder.privacy %> checked <% end %>></td>
-          <td><%= folder.tools.count %></td>
+          <td><a href="/users/<%= folder.user.slug %>/<%= folder.slug %>"><%= folder.tools.count %></td>
         </tr>
       <% end %>
     <table>
