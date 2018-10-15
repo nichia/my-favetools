@@ -30,11 +30,7 @@
         <tr>
           <td><a href="/folders/<%= folder.id %>/<%= folder.slug %>"><%= folder.name %></a></td>
           <td><%= folder.description %></td>
-          <% if folder.category_id %>
-            <td><%= folder.category.name %></td>
-          <% else %>
-            <td> undefined </td>
-          <% end %>
+          <td><%= folder.category.name %></td>
           <td><%= folder.user.name %></td>
           <td><input type="checkbox" <% if folder.privacy %> checked <% end %>></td>
           <td><a href="/users/<%= folder.user.slug %>/<%= folder.slug %>"><%= folder.items.count %></td>

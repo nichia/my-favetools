@@ -1,9 +1,8 @@
 # Create Users
-@user1 = User.create(name: "fanny", email: "fanny@email.com", password: "password")
-@user2 = User.create(name: "braddy", email: "braddy@email.com", password: "password")
-@user3 = User.create(name: "abby", email: "abby@email.com", password: "password")
-@user4 = User.create(name: "mike", email: "mike@email.com", password: "password")
-@user5 = User.create(name: "jade", email: "jade@email.com", password: "password")
+
+@user1 = User.create(name: "abby", email: "abby@email.com", password: "password")
+@user2 = User.create(name: "zack", email: "zack@email.com", password: "password")
+@user3 = User.create(name: "jade", email: "jade@email.com", password: "password")
 
 # Create Categories
 @cat1 = Category.create(name: 'Other')
@@ -32,17 +31,18 @@
 @folder1 = @user1.folders.create(name: "Sweets", description: "Sweet endings or treats", privacy: false, category: @cat6)
 @folder2 = @user1.folders.create(name: "Slow Cooker Magic", description: "Slow cooker recipes", privacy: false, category: @cat6)
 @folder3 = @user1.folders.create(name: "Home & Garden", description: "Beautiful spaces, tips and products", privacy: false, category: @cat17)
-@folder4 = @user2.folders.create(name: "Words", description: "Words to remember", privacy: false, category: @cat13)
-@folder5 = @user2.folders.create(name: "Super Bowl", description: "Super Bowl party ideas", privacy: false, category: @cat5)
-@folder6 = @user3.folders.create(name: "Destinations", description: "Places I'd like to visit...", privacy: false, category: @cat19)
-@folder7 = @user3.folders.create(name: "Drinks on Me", description: "Alcoholic and non-alcoholic", privacy: false, category: @cat6)
-@folder8 = @user4.folders.create(name: "Organization & Tips", description: "Getting organized and hosehold tips", privacy: false, category: @cat10)
-@folder9 = @user4.folders.create(name: "Fun", description: "Fun stuff :)", privacy: false, category: @cat1)
-@folder10 = @user5.folders.create(name: "Favorite Flatiron Videos", description: "Favorite videos shared by Avi", privacy: false, category: @cat8)
-@folder11 = @user5.folders.create(name: "Ruby Docs", description: "Ruby related documentations...", privacy: false, category: @cat8)
-@folder12 = @user5.folders.create(name: "Tecnology Podcasts", description: "Coding, technology and ruby podcasts", privacy: false, category: @cat8)
+@folder4 = @user1.folders.create(name: "Words", description: "Words to remember", privacy: false, category: @cat13)
+@folder5 = @user1.folders.create(name: "Super Bowl", description: "Super Bowl party ideas", privacy: false, category: @cat5)
+@folder6 = @user2.folders.create(name: "Destinations", description: "Places I'd like to visit...", privacy: false, category: @cat19)
+@folder7 = @user2.folders.create(name: "Drinks on Me", description: "Alcoholic and non-alcoholic", privacy: false, category: @cat6)
+@folder8 = @user2.folders.create(name: "Organization & Tips", description: "Getting organized and hosehold tips", privacy: false, category: @cat10)
+@folder9 = @user2.folders.create(name: "Fun", description: "Fun stuff :)", privacy: false, category: @cat1)
+@folder10 = @user3.folders.create(name: "Favorite Flatiron Videos", description: "Favorite videos shared by Avi", privacy: false, category: @cat8)
+@folder11 = @user3.folders.create(name: "Ruby Docs", description: "Ruby related documentations...", privacy: false, category: @cat8)
+@folder12 = @user3.folders.create(name: "Tecnology Podcasts", description: "Coding, technology and ruby podcasts", privacy: false, category: @cat8)
 
-# Create Tools
+
+# Create Items
 @item1 = @folder1.items.create(name: "The Best Chocolate Cake Recipe {Ever}", description: "The Best Chocolate Cake recipe with decadent Chocolate Frosting that will quickly become your favorite!", url_link: "https://addapinch.com/the-best-chocolate-cake-recipe-ever/")
 @item2 = @folder1.items.create(name: "The Best Vanilla Cheesecake Recipe", description: "This Vanilla Cheesecake is super creamy and not as heavy as traditional baked cheesecake thanks to a good dose of sour cream or Greek yogurt — it’s soft and luscious and perfect with fresh berries!", url_link: "https://www.thereciperebel.com/the-best-vanilla-cheesecake/")
 @item3 = @folder2.items.create(name: "Crock-Pot BBQ Ribs", description: "Crock-Pot BBQ Ribs Brushed With Extra Juices. Fall-off-the-bone tender pork ribs cooked in the crock-pot. This super easy recipe takes less than 10 minutes to prep and can be cooked in as little as 4 hours on the high setting. Use your favorite barbecue sauce for a flavorful, finger-lickin' good meal!", url_link: "https://www.therisingspoon.com/2016/05/crock-pot-bbq-ribs.html?m=1")

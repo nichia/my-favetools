@@ -12,13 +12,7 @@
     <h2>Folder</h2>
     <p><b>Name:</b> <%= @folder.name %></p>
     <p><b>Description:</b> <%= @folder.description %></p>
-    <p><b>Category:</b>
-      <% if @folder.category_id %>
-        <%= @folder.category.name %>
-      <% else %>
-        underfined
-      <% end %>
-    </p>
+    <p><b>Category:</b> <%= @folder.category.name %></p>
     <p><b>owner:</b> <%= @folder.user.name %></p>
 
     <p><b>Private Folder:</b>
