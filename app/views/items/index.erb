@@ -20,12 +20,14 @@
       <tr>
         <th> Name </th>
         <th> Description </th>
+        <th> Website </th>
       </tr>
 
       <% @items.each do |item| %>
         <tr>
           <td><a href="/items/<%= item.id %>/<%= item.slug %>"><%= item.name %></a></td>
           <td><%= item.description %></td>
+          <td><a href="<%= item.url_link %>" target="_blank">View</a></td>
         </tr>
       <% end %>
     <table>

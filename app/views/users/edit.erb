@@ -14,14 +14,16 @@
       <input id="hidden" type="hidden" name="_method" value="patch">
 
       <label for="username">Username</label>
-      <input id="username" type="text" name="user[name]" placeholder="Username" value="<%= @user.name %>" required/>
+      <input id="username" type="text" name="user[name]" placeholder="Username" value="<%= @user.name %>" required/><br><br/>
 
       <label for="email">Email</label>
-      <input id="email" type="text" name="user[email]" placeholder="Email" value="<%= @user.email %>" required/>
+      <input id="email" type="text" name="user[email]" placeholder="Email" value="<%= @user.email %>" required/><br><br/>
 
       <label for="password">Password</label>
       <input id="password" type="password" name="user[password]" placeholder="Password" value="<%= @user.password %>" required/>
 
+      <br><br/>
+      
       <input type="submit" value="Save">
 
     </form> <!-- /edit route -->
