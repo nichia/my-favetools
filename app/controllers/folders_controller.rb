@@ -8,6 +8,24 @@ class FoldersController < ApplicationController
     erb :'/folders/index'
   end #-- get /folders --
 
+  # GET /folders/users/:slug route #index action
+  # index page to display all folders that belongs to this user
+  get '/folders/users/:user_slug' do
+    #binding.pry
+    @user = User.find_by_slug(params[:user_slug])
+    if @user
+      if @user == current_user
+        @folders = Folder.where(user_id: @user.id).order('id DESC')
+      else
+        @folders = Folder.where(user_id: @user.id, privacy: false).order('id DESC')
+      end
+      erb :'/folders/index'
+    else
+      flash[:message] = "Username \'#{params[:user_slug]}\' not found."
+      redirect :"/users"
+    end
+  end #-- get /folders/users/:slug --
+
   # GET /folders/new route #new action
   get '/folders/new' do
     @categories = Category.all.sort_by do |category|

@@ -10,64 +10,6 @@ class UsersController < ApplicationController
     erb :'/users/index'
   end #-- get /users --
 
-  # GET /users/:slug route #index action
-  # index page to display all folders that belongs to this user
-  get '/users/:slug' do
-    #binding.pry
-    @user = User.find_by_slug(params[:slug])
-    if @user
-      if @user == current_user
-        @folders = Folder.where(user_id: @user.id).order('id DESC')
-      else
-        @folders = Folder.where(user_id: @user.id, privacy: false).order('id DESC')
-      end
-      erb :'/folders/index'
-    else
-      flash[:message] = "Username \'#{params[:slug]}\' not found."
-      redirect :"/users"
-    end
-  end #-- get /users/:slug --
-
-  # GET /users/:slug/:folder_slug route - index action
-  # index page to display all items base on username and folder slugs in the url
-  get '/users/:slug/:folder_slug' do
-    #binding.pry
-    user = User.find_by_slug(params[:slug])
-    if user
-      if user == current_user
-        #find folder_slug that belongs to user.id
-        folder = Folder.find_by_slug_user(params[:folder_slug], user.id)
-        if folder
-          @items = Item.where(folder_id: folder.id)
-          if @items
-            erb :'/items/index'
-          end
-        else
-          flash[:message] = "Folder \'#{params[:folder_slug]}\' for username \'#{params[:slug]}\' not found."
-          #redirect to user requesting route
-          redirect :"/users/#{params[:slug]}"
-        end
-      else
-        #find folder_slug that belongs to user.id
-        folder = Folder.find_by_slug_user(params[:folder_slug], user.id)
-        if folder &&  !folder.privacy
-          #display items for public folder only
-          @items = Item.where(folder_id: folder.id)
-          if @items
-            erb :'/items/index'
-          end
-        else
-          flash[:message] = "Public folder \'#{params[:folder_slug]}\' for username \'#{params[:slug]}\' not found."
-          #redirect to user requesting route
-          redirect :"/users/#{params[:slug]}"
-        end
-      end
-    else
-      flash[:message] = "Username \'#{params[:slug]}\' not found."
-      redirect :"/users"
-    end
-  end #-- get /users/:slug/:folder_slug --
-
   # GET /signup route #signup/new action
   # renders a form to create a new user. The form includes fields for username, email and password
   # user registration

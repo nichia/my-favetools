@@ -3,11 +3,60 @@ class ItemsController < ApplicationController
   # GET /items route #index action
   # index page to display all public items
   get '/items' do
-    #find non-private items that does not belong to current user, order by latest items
-    @items = Item.find_by_privacy_not_user(false, session[:user_id])
-
+    # find non-private items that does not belong to the current user
+    # and find items for the current user
+    @items = (Item.find_by_privacy_and_not_user(false, session[:user_id]) + Item.find_by_user(session[:user_id]))
     erb :'/items/index'
   end #-- get /items --
+
+  # GET /items/user/:user_slug route #index action
+  # index page to display all items that belongs to current_user or
+  # all public items that belongs to a user
+  get '/items/users/:user_slug' do
+    #binding.pry
+    user = User.find_by_slug(params[:user_slug])
+    if user
+      if user == current_user
+        #find items that belong to current user, order by latest items
+        @items = Item.find_by_user(user.id)
+      elsif
+        #find non-private items that does not belong to current user, order by latest items
+        @items = Item.find_by_user_privacy(user.id, false)
+      end
+      erb :'/items/index'
+    else
+      flash[:message] = "Username \'#{params[:user_slug]}\' not found."
+      redirect :"/users"
+    end
+  end #-- get /items/user/ --
+
+  # GET /items/users/:user_slug/:folder_slug route - index action
+  # index page to display all items base on username and folder slugs in the url
+  get '/items/users/:user_slug/:folder_slug' do
+    #binding.pry
+    user = User.find_by_slug(params[:user_slug])
+    if user
+      #find folder_slug that belongs to user.id
+      folder = Folder.find_by_slug_user(params[:folder_slug], user.id)
+      if folder
+        if user == current_user || !folder.privacy
+          # if current_user or folders that are public
+          @items = Item.where(folder_id: folder.id)
+        else
+          @items = []
+        end
+        erb :'/items/index'
+      else
+        flash[:message] = "Folder \'#{params[:folder_slug]}\' for username \'#{params[:user_slug]}\' not found."
+        #redirect to user requesting route
+        redirect :"/folders/users/#{params[:user_slug]}"
+      end
+    else
+      flash[:message] = "Username \'#{params[:user_slug]}\' not found."
+      redirect :"/users"
+    end
+  end #-- get /items/users/:user_slug/:folder_slug --
+
 
   # GET /items/new route #new action
   get '/items/new' do

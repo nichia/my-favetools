@@ -29,7 +29,7 @@ class ApplicationController < Sinatra::Base
   # index page to display all public items
   get "/" do
     if logged_in?
-      redirect :"/users/#{current_user.slug}"
+      redirect :"/folders/users/#{current_user.slug}"
     else
       erb :index
     end

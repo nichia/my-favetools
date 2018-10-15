@@ -14,16 +14,16 @@
       <tr>
         <th> Username </th>
         <th> Email </th>
-        <th> Public Folders </th>
-        <th> Items </th>
+        <th> View Folders </th>
+        <th> View Items </th>
       </tr>
 
       <% @users.each do |user| %>
         <tr>
-          <td><a href="/users/<%= user.slug %>"><%= user.name %></a></td>
+          <td><%= user.name %></td>
           <td><%= user.email %></td>
-          <td><%= user.folders.where(privacy: false).count %></td>
-          <td><%= user.items.where(folders: {privacy: false}).count %></td>
+          <td><a href="/folders/users/<%= user.slug %>"><%= user.folders.where(privacy: false).count %></a></td>
+          <td><a href="/items/users/<%= user.slug %>"><%= user.items.where(folders: {privacy: false}).count %></a></td>
         </tr>
       <% end %>
     <table>

@@ -9,7 +9,7 @@
   <% end %>
 
   <div class="col-md-8 col-md-offset-2">
-    <% if path_info.match(/\A\/users\//) %>
+    <% if path_info.match(/\/users\//) %>
       <% p_user_folder = path_info.split("/") %>
       <h2><a href="/users/<%= p_user_folder[2] %>"><%= p_user_folder[-2] %></a> <%= p_user_folder[-1] %>: Items</h2>
     <% else %>

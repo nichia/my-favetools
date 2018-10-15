@@ -4,34 +4,34 @@ class SessionsController < ApplicationController
   # renders a form for logging in
   get '/login' do
     if logged_in?
-      redirect :"/"
+      redirect :"/users/#{current_user.slug}"
     else
       erb :'/sessions/login'
     end
   end #-- /login --
 
-  # POST /login route #create action
+  # POST /login route #login validation action
   # find the user by username and check that the password matches up before registering the session data
   post '/login' do
     #raise params.inspect
-    if params[:name].empty? || params[:password].empty?
-      flash.now[:message] = "Username and password cannot be left blank."
-      erb :'/sessions/login'
+    if params[:name_or_email].rindex('@')
+      @user = User.find_by(email: params[:name_or_email])
     else
-      @user = User.find_by(name: params[:name])
-      if @user
-        if @user.authenticate(params[:password])
-          # set session
-          set_session
-          redirect :"/users/#{current_user.slug}"
-        else
-          flash.now[:message] = "Username and password combination do not match, please try again."
-          erb :'/sessions/login'
-        end
+      @user = User.find_by(name: params[:name_or_email])
+    end
+
+    if @user
+      if @user.authenticate(params[:password])
+        # set session
+        set_session
+        redirect :"/folders/users/#{current_user.slug}"
       else
-        flash.now[:message] = "Account not found, please try again."
+        flash.now[:message] = "Username/email and password combination do not match, please try again."
         erb :'/sessions/login'
       end
+    else
+      flash.now[:message] = "User account not found, please try again."
+      erb :'/sessions/login'
     end
   end #-- post /login --
 

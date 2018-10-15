@@ -16,9 +16,8 @@ In a bash terminal, run the server.
     $ run shotgun
 
 ## Usage
-Open up another terminal and copy/paste the domain into a web browser URL (usually http://localhost:9393) to use the application.
+Open up another terminal and copy/paste the IP server address into a web browser URL (usually http://localhost:9393) to use the application.
 Sign up and login to keep track of and share your favorite tools.
-
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/nichia/my-favetools.

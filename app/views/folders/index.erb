@@ -9,7 +9,7 @@
   <% end %>
 
   <div class="col-md-8 col-md-offset-2">
-    <% if path_info.match(/\A\/users\//) %>
+    <% if path_info.match(/\/users\//) %>
       <% p_user = path_info.split("/users/").last %>
       <h2><%= p_user %>: Folders</h2>
     <% else %>
@@ -33,7 +33,7 @@
           <td><%= folder.category.name %></td>
           <td><%= folder.user.name %></td>
           <td><input type="checkbox" <% if folder.privacy %> checked <% end %>></td>
-          <td><a href="/users/<%= folder.user.slug %>/<%= folder.slug %>"><%= folder.items.count %></td>
+          <td><a href="/items/users/<%= folder.user.slug %>/<%= folder.slug %>"><%= folder.items.count %></td>
         </tr>
       <% end %>
     <table>
