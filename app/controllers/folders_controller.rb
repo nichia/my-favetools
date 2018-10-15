@@ -97,7 +97,7 @@ class FoldersController < ApplicationController
   # PATCH /folders/:id/:slug route #update action
   # modifies an existing folder based on ID and slug in the url
   patch '/folders/:id/:slug' do
-    binding.pry
+    #binding.pry
     if logged_in?
       if params[:folder][:name].empty?
         flash[:message] = "Folder name cannot be left blank."
@@ -125,7 +125,11 @@ class FoldersController < ApplicationController
     if logged_in?
       @folder = Folder.find_by_id(params[:id])
       if @folder && @folder.user == current_user
-        @folder.delete
+        # items=@folder.items
+        # items.each do |item|
+        #   item.destroy
+        # end
+        @folder.destroy
         flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'."
         redirect :"/folders"
       else

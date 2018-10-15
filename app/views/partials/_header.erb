@@ -5,7 +5,6 @@
   <nav>
     <a href="/">Home</a>
     <% if logged_in? %>
-      <a href="/users/<%= current_user.slug %>"><%= current_user.slug %></a>
       <a href="/folders">Folders</a>
       <a href="/items">Items</a>
       <a href="/users">Users</a>
