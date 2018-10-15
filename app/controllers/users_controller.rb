@@ -4,85 +4,69 @@ class UsersController < ApplicationController
   # index page to display all users
   get '/users' do
     #binding.pry
-    if logged_in?
-      @users = User.all.sort_by do |user|
-        user.name
-      end
-      erb :'/users/index'
-    else
-      flash[:message] = "You must be logged in to view user listing."
-      redirect :"/login"
+    @users = User.all.sort_by do |user|
+      user.name
     end
-  end
+    erb :'/users/index'
+  end #-- get /users --
 
   # GET /users/:slug route #index action
   # index page to display all folders that belongs to this user
   get '/users/:slug' do
     #binding.pry
-    if logged_in?
-      @user = User.find_by_slug(params[:slug])
-      if @user
-        if @user == current_user
-          @folders = Folder.where(user_id: @user.id).order('id DESC')
-        else
-          @folders = Folder.where(user_id: @user.id, privacy: false).order('id DESC')
-        end
-        # erb :'/items/index'
-        erb :'/folders/index'
+    @user = User.find_by_slug(params[:slug])
+    if @user
+      if @user == current_user
+        @folders = Folder.where(user_id: @user.id).order('id DESC')
       else
-        flash[:message] = "Username \'#{params[:slug]}\' not found."
-        redirect :"/"
+        @folders = Folder.where(user_id: @user.id, privacy: false).order('id DESC')
       end
+      erb :'/folders/index'
     else
-      flash[:message] = "You must be logged in to view user's info."
-      redirect :"/login"
+      flash[:message] = "Username \'#{params[:slug]}\' not found."
+      redirect :"/users"
     end
-  end
+  end #-- get /users/:slug --
 
   # GET /users/:slug/:folder_slug route - index action
   # index page to display all items base on username and folder slugs in the url
   get '/users/:slug/:folder_slug' do
     #binding.pry
-    if logged_in?
-      user = User.find_by_slug(params[:slug])
-      if user
-        if user == current_user
-          #find folder_slug that belongs to user.id
-          folder = Folder.find_by_slug_user(params[:folder_slug], user.id)
-          if folder
-            @items = Item.where(folder_id: folder.id)
-            if @items
-              erb :'/items/index'
-            end
-          else
-            flash[:message] = "Folder \'#{params[:folder_slug]}\' for username \'#{params[:slug]}\' not found."
-            #redirect to user requesting route
-            redirect :"/users/#{params[:slug]}"
+    user = User.find_by_slug(params[:slug])
+    if user
+      if user == current_user
+        #find folder_slug that belongs to user.id
+        folder = Folder.find_by_slug_user(params[:folder_slug], user.id)
+        if folder
+          @items = Item.where(folder_id: folder.id)
+          if @items
+            erb :'/items/index'
           end
         else
-          #find folder_slug that belongs to user.id
-          folder = Folder.find_by_slug_user(params[:folder_slug], user.id)
-          if folder &&  !folder.privacy
-            #display items for public folder only
-            @items = Item.where(folder_id: folder.id)
-            if @items
-              erb :'/items/index'
-            end
-          else
-            flash[:message] = "Public folder \'#{params[:folder_slug]}\' for username \'#{params[:slug]}\' not found."
-            #redirect to user requesting route
-            redirect :"/users/#{params[:slug]}"
-          end
+          flash[:message] = "Folder \'#{params[:folder_slug]}\' for username \'#{params[:slug]}\' not found."
+          #redirect to user requesting route
+          redirect :"/users/#{params[:slug]}"
         end
       else
-        flash[:message] = "Username \'#{params[:slug]}\' not found."
-        redirect :"/"
+        #find folder_slug that belongs to user.id
+        folder = Folder.find_by_slug_user(params[:folder_slug], user.id)
+        if folder &&  !folder.privacy
+          #display items for public folder only
+          @items = Item.where(folder_id: folder.id)
+          if @items
+            erb :'/items/index'
+          end
+        else
+          flash[:message] = "Public folder \'#{params[:folder_slug]}\' for username \'#{params[:slug]}\' not found."
+          #redirect to user requesting route
+          redirect :"/users/#{params[:slug]}"
+        end
       end
     else
-      flash[:message] = "You must be logged in to view this users items."
-      redirect :"/login"
+      flash[:message] = "Username \'#{params[:slug]}\' not found."
+      redirect :"/users"
     end
-  end
+  end #-- get /users/:slug/:folder_slug --
 
   # GET /signup route #signup/new action
   # renders a form to create a new user. The form includes fields for username, email and password
@@ -93,7 +77,7 @@ class UsersController < ApplicationController
     else
       erb :'/users/new'
     end
-  end
+  end #-- get /signup --
 
   # POST /signup route #create action
   # create a new instance of user class with a username, email and password. Fill in the session data
@@ -115,30 +99,25 @@ class UsersController < ApplicationController
       set_session
       redirect :"/folders"
     end
-  end
+  end #-- post /signup --
 
   # GET /settings/:slug route - edit action
   # displays users setting base on username slug in the url
   get '/settings/:slug' do
     #binding.pry
-    if logged_in?
-      @user = User.find_by_slug(params[:slug])
-      if @user
-        if @user == current_user
-          erb :'/users/edit'
-        else
-          flash[:message] = "You do not have permission to edit user setting."
-          redirect :"/"
-        end
+    @user = User.find_by_slug(params[:slug])
+    if @user
+      if @user == current_user
+        erb :'/users/edit'
       else
-        flash[:message] = "Username \'#{params[:slug]}\' not found."
+        flash[:message] = "You do not have permission to edit user setting."
         redirect :"/"
       end
     else
-      flash[:message] = "You must be logged in to edit user setting."
-      redirect :"/login"
+      flash[:message] = "Username \'#{params[:slug]}\' not found."
+      redirect :"/users"
     end
-  end
+  end #-- get /settings/:slug --
 
   # PATCH /settings/:slug route #update action
   # modifies an existing user account settings based on username slug in the url
@@ -172,5 +151,5 @@ class UsersController < ApplicationController
       reset_current_user
       redirect :"/"
     end
-  end
+  end #-- patch /settings/:slug --
 end

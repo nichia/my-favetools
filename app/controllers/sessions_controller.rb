@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     else
       erb :'/sessions/login'
     end
-  end
+  end #-- /login --
 
   # POST /login route #create action
   # find the user by username and check that the password matches up before registering the session data
@@ -19,10 +19,7 @@ class SessionsController < ApplicationController
       erb :'/sessions/login'
     else
       @user = User.find_by(name: params[:name])
-      if !@user
-        flash.now[:message] = "Account not found, please try again."
-        erb :'/sessions/login'
-      else
+      if @user
         if @user.authenticate(params[:password])
           # set session
           set_session
@@ -31,9 +28,12 @@ class SessionsController < ApplicationController
           flash.now[:message] = "Username and password combination do not match, please try again."
           erb :'/sessions/login'
         end
+      else
+        flash.now[:message] = "Account not found, please try again."
+        erb :'/sessions/login'
       end
     end
-  end
+  end #-- post /login --
 
   # GET /logout route #logout action
   # clears the session data and redirects to the home page
@@ -43,5 +43,5 @@ class SessionsController < ApplicationController
       logout
     end
     redirect :"/"
-  end
+  end #-- /logout --
 end

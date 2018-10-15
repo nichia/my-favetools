@@ -12,6 +12,18 @@ class ApplicationController < Sinatra::Base
     register Sinatra::Flash
   end #-- configure --
 
+  before do
+    pass if (request.path_info == "/" ||
+            request.path_info == "/login" ||
+            request.path_info == "/logout" ||
+            request.path_info == "/signup")
+
+    if !logged_in?
+      flash[:message] = "Please log in to continue."
+      redirect :"/login"
+    end
+  end #-- before --
+
   # GET / route #index action
   # Home page for user registration, if not logged in or
   # index page to display all public items
@@ -21,8 +33,7 @@ class ApplicationController < Sinatra::Base
     else
       erb :index
     end
-
-  end
+  end #-- get / --
 
   # handle 404 errors
   not_found do

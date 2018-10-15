@@ -17,7 +17,7 @@
       <input id="name" type="text" name="folder[name]" value="<%= @folder.name %>" required/><br/>
 
       <label for="description">Description</label>
-      <input id="description" type="text" name="folder[description]" value="<% @folder.description %>"><br/>
+      <textarea id="description" name="folder[description]" rows="2" cols="100"><%= @folder.description %></textarea></p>
 
       <label for="category_id">Select a Category</label>
       <select id="category_id" type="text" name="folder[category_id]">
