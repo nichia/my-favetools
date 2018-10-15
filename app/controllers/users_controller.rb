@@ -87,17 +87,17 @@ class UsersController < ApplicationController
       flash.now[:message] = "Username, email and password can not be left blank."
       erb :'/users/signup'
     elsif User.find_by(name: params[:user][:name])
-      flash.now[:message] = "Username already taken, please use another name."
+      flash.now[:message] = "Username already taken, please choose another name."
       erb :'/users/signup'
     elsif User.find_by(email: params[:user][:email])
-      flash.now[:message] = "An account already exists with this email, please use another email."
+      flash.now[:message] = "An account already exists with this email, please choose another email."
       erb :'/users/signup'
     else
       @user = User.create(params[:user])
 
       # set session
       set_session
-      redirect :"/folders"
+      redirect :"/tools"
     end
   end #-- post /signup --
 
@@ -110,8 +110,8 @@ class UsersController < ApplicationController
       if @user == current_user
         erb :'/users/edit'
       else
-        flash[:message] = "You do not have permission to edit user setting."
-        redirect :"/"
+        flash[:message] = "You do not have permission to edit a user account you didn't create."
+        redirect :"/users"
       end
     else
       flash[:message] = "Username \'#{params[:slug]}\' not found."
@@ -124,22 +124,22 @@ class UsersController < ApplicationController
   patch '/settings/:slug' do
     #binding.pry
     #raise params.inspect
-    @user = User.find_by_slug(params[:slug])
 
     if params[:user][:name].empty? || params[:user][:email].empty? || params[:user][:password].empty?
       flash.now[:message] = "Username, email and password can not be left blank."
       erb :'/users/edit'
     else
+      @user = User.find_by_slug(params[:slug])
       if @user.name != params[:user][:name]
         if User.find_by(name: params[:user][:name])
-          flash.now[:message] = "Username already taken, please use another name."
+          flash.now[:message] = "Username already taken, please choose another name."
           erb :'/users/edit'
         end
         @user.name = params[:user][:name]
       end
       if @user.email != params[:user][:email]
         if User.find_by(email: params[:user][:email])
-          flash.now[:message] = "An account already exists with this email, please use another email."
+          flash.now[:message] = "An account already exists with this email, please choose another email."
           erb :'/users/edit'
         end
         @user.email = params[:user][:email]

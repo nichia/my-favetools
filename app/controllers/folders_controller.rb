@@ -21,10 +21,11 @@ class FoldersController < ApplicationController
   post '/folders' do
     #raise params.inspect
     #binding.pry
-    folder = Folder.find_by(name: params[:folder][:name])
-    if folder && folder.user == current_user
+    # folder = Folder.find_by(name: params[:folder][:name])
+    # if folder && folder.user == current_user
+    if Folder.find_by(name: params[:folder][:name], user_id: current_user.id)
       # Flash Message when the new folder name already exists for current_user
-      flash[:message].name = "You already have a folder with this name, please use another name."
+      flash[:message] = "You already have a folder with this name \'#{params[:folder][:name]}\', please choose another name."
       redirect :"/folders/new"
     else
       @folder = Folder.create(params[:folder])
@@ -60,7 +61,7 @@ class FoldersController < ApplicationController
         end
         erb :'/folders/edit'
       else
-        flash[:message] = "You must be the folder owner to edit this record."
+        flash[:message] = "You don't have permission to edit a folder you didn't create."
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"
       end
     else
@@ -79,11 +80,18 @@ class FoldersController < ApplicationController
     else
       @folder = Folder.find_by_id(params[:id])
       if @folder && @folder.user == current_user
+        if @folder.name != params[:folder][:name]
+          # Flash Message if the new folder name already exists for this user
+          if Folder.find_by(name: params[:folder][:name], user_id: @folder.user_id)
+            flash[:message] = "You already have a folder with this name \'#{params[:folder][:name]}\', please choose another name."
+            redirect :"/folders/#{@folder.id}/#{@folder.slug}/edit"
+          end
+        end
         @folder.update(params[:folder])
         flash[:message] = "You've successfully updated the folder \'#{params[:slug]}\'."
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"
       else
-        flash[:message] = "You must be the folder owner to update this record."
+        flash[:message] = "You don't have permission to update a folder you didn't create."
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"
       end
     end
@@ -102,7 +110,7 @@ class FoldersController < ApplicationController
       flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'."
       redirect :"/folders"
     else
-      flash[:message] = "You must be the folder owner to delete this record."
+      flash[:message] = "You don't have permission to delete a folder you didn't create."
       redirect :"/folders/#{@folder.id}/#{@folder.slug}"
     end
   end #-- delete /folders/:id/:slug --
