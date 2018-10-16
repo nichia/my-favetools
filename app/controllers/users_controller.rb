@@ -31,9 +31,9 @@ class UsersController < ApplicationController
       redirect :"/folders/users/#{current_user.slug}"
     else
       if @user.errors.any?
-        flash.now[:user_message] = @user.errors.full_messages
+        flash.now[:message] = @user.errors.full_messages.to_sentence
       else
-        flash.now[:user_message] = ["There's an error in signing up, please try again."]
+        flash.now[:message] = "There's an error in signing up, please try again."
       end
       erb :'/users/new'
     end
@@ -71,13 +71,13 @@ class UsersController < ApplicationController
       end
 
       if @user.errors.any?
-        flash.now[:user_message] = @user.errors.full_messages
+        flash.now[:message] = @user.errors.full_messages.to_sentence
       else
-        flash.now[:user_message] = ["There's an error in updating user account settings, please try again."]
+        flash.now[:message] = "There's an error in updating user account settings, please try again."
       end
       erb :'/users/edit'
     else
-      flash.now[:user_message] = ["Password incorrect, please try again."]
+      flash.now[:message] = "Password incorrect, please try again."
       erb :'/users/edit'
     end
   end #-- patch /settings/:slug --

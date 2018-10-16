@@ -2,11 +2,9 @@
 
 <div class="container">
 
-  <% if flash[:user_message] %>
+  <% if flash[:message] %>
     <div class="flash-message-wrapper">
-      <% flash[:user_message].each do |msg| %>
-        <li> <%= msg %></li>
-      <% end %>
+      <%= flash[:message] %>
     </div>
   <% end %>
 
