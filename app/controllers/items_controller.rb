@@ -13,8 +13,7 @@ class ItemsController < ApplicationController
   # index page to display all items that belongs to current_user or
   # all public items that belongs to a user
   get '/items/users/:user_slug' do
-    user = User.find_by_slug(params[:user_slug])
-    if user
+    if user = User.find_by_slug(params[:user_slug])
       if user == current_user
         #find items that belong to current user, order by latest items
         @items = Item.find_by_user(user.id)
@@ -32,8 +31,7 @@ class ItemsController < ApplicationController
   # GET /items/users/:user_slug/:folder_slug route - index action
   # index page to display all items base on username and folder slugs in the url
   get '/items/users/:user_slug/:folder_slug' do
-    user = User.find_by_slug(params[:user_slug])
-    if user
+    if user = User.find_by_slug(params[:user_slug])
       #find folder_slug that belongs to user.id
       folder = Folder.find_by_slug_user(params[:folder_slug], user.id)
       if folder
@@ -66,8 +64,7 @@ class ItemsController < ApplicationController
   # GET /items/new/:id route #new action
   # new action to copy an item - displays create item form base on existing item
   get '/items/new/:id' do
-    @item = Item.find_by_id(params[:id])
-    if @item
+    if @item = Item.find_by_id(params[:id])
       @folders = Folder.where(user: current_user).sort_by do |folder|
         folder.name
       end
@@ -103,10 +100,14 @@ class ItemsController < ApplicationController
           end
         end
 
-        @item = Item.create(params[:item])
-        # Flash Message when a new item is created
-        flash[:message] = "Successfully created an item"
-        redirect :"/items/#{@item.id}/#{@item.slug}"
+        if @item = Item.create(params[:item])
+          # Flash Message when a new item is created
+          flash[:message] = "Successfully created an item"
+          redirect :"/items/#{@item.id}/#{@item.slug}"
+        else
+          flash[:message] = "Errors creating item"
+          redirect :"/items/new"
+        end
       end
     end
   end #-- post /items --
@@ -173,7 +174,9 @@ class ItemsController < ApplicationController
             @item.save
           end
         end
-        flash[:message] = "You've successfully updated the item \'#{@item.name}\'"
+        if @item.valid?
+          flash[:message] = "You've successfully updated the item \'#{@item.name}\'"
+        end
         redirect :"/items/#{@item.id}/#{@item.slug}"
       else
         flash[:message] = "You don't have permission to update an item you didn't create"
@@ -187,9 +190,13 @@ class ItemsController < ApplicationController
     #binding.pry
     @item = Item.find_by_id(params[:id])
     if @item && @item.folder.user == current_user
-      @item.delete
-      flash[:message] = "You've successfully deleted your item #{params[:slug]}"
-      redirect :"/folders/users/#{current_user.slug}"
+      if @item.destroy
+        flash[:message] = "You've successfully deleted your item #{params[:slug]}"
+        redirect :"/folders/users/#{current_user.slug}"
+      else
+        flash[:message] = "Errors deleting item #{params[:slug]}"
+        redirect :"/items/#{@item.id}/#{@item.slug}"
+      end
     else
       flash[:message] = "You don't have permission to delete an item you didn't create"
       redirect :"/items/#{@item.id}/#{@item.slug}"

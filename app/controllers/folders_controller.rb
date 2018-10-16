@@ -122,7 +122,7 @@ class FoldersController < ApplicationController
     if @folder && @folder.user == current_user
       if @folder.destroy
         flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'"
-        redirect :"/folders"
+        redirect :"/folders/users/#{@current_user.slug}"
       else
         flash[:message] = "Errors deleleting folder"
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"
