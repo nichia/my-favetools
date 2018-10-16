@@ -24,13 +24,14 @@ class SessionsController < ApplicationController
       if @user.authenticate(params[:password])
         # set session
         set_session
+        flash[:message] = "Successfully logged in as #{current_user.name}"
         redirect :"/folders/users/#{current_user.slug}"
       else
-        flash.now[:message] = "Username/email and password combination do not match, please try again."
+        flash.now[:message] = "Username/email and password combination do not match, please try again"
         erb :'/sessions/login'
       end
     else
-      flash.now[:message] = "User account not found, please try again."
+      flash.now[:message] = "User account not found, please try again"
       erb :'/sessions/login'
     end
   end #-- post /login --
@@ -41,6 +42,7 @@ class SessionsController < ApplicationController
     if logged_in?
       # clear session
       logout
+      flash[:message] = "You've successfully logged out"
     end
     redirect :"/"
   end #-- /logout --

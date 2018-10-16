@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
       end
       erb :'/items/index'
     else
-      flash[:message] = "Username \'#{params[:user_slug]}\' not found."
+      flash[:message] = "Username \'#{params[:user_slug]}\' not found"
       redirect :"/users"
     end
   end #-- get /items/user/ --
@@ -45,12 +45,12 @@ class ItemsController < ApplicationController
         end
         erb :'/items/index'
       else
-        flash[:message] = "Folder \'#{params[:folder_slug]}\' for username \'#{params[:user_slug]}\' not found."
+        flash[:message] = "Folder \'#{params[:folder_slug]}\' for username \'#{params[:user_slug]}\' not found"
         #redirect to user requesting route
         redirect :"/folders/users/#{params[:user_slug]}"
       end
     else
-      flash[:message] = "Username \'#{params[:user_slug]}\' not found."
+      flash[:message] = "Username \'#{params[:user_slug]}\' not found"
       redirect :"/users"
     end
   end #-- get /items/users/:user_slug/:folder_slug --
@@ -83,20 +83,20 @@ class ItemsController < ApplicationController
     #raise params.inspect
     #binding.pry
     if params[:item][:name].empty?
-      flash[:message] = "Item name cannot be left blank."
+      flash[:message] = "Item name cannot be left blank"
       redirect :"/items/new"
     else
       # Flash Message if the new item name already exists for this folder
       if params[:folder][:name].empty? &&
          Item.find_by(name: params[:item][:name], folder_id: params[:item][:folder_id])
-        flash[:message] = "You already have an item \'#{params[:item][:name]}\' with this folder, please choose another name."
+        flash[:message] = "You already have an item \'#{params[:item][:name]}\' with this folder, please choose another name"
         redirect :"/items/new"
       else
         # new folder
         if !params[:folder][:name].empty?
           folder = Folder.find_by(name: params[:folder][:name])
           if folder && folder.user == current_user
-            flash[:message] = "Folder \'#{params[:folder][:name]}\' already exists, please select from dropdown menu."
+            flash[:message] = "Folder \'#{params[:folder][:name]}\' already exists, please select from dropdown menu"
             redirect :"/items/new"
           else
             folder = Folder.create(name: params[:folder][:name], user_id: current_user.id, category_id: 1)
@@ -106,7 +106,7 @@ class ItemsController < ApplicationController
 
         @item = Item.create(params[:item])
         # Flash Message when a new item is created
-        flash[:message] = "Successfully created an item."
+        flash[:message] = "Successfully created an item"
         redirect :"/items/#{@item.id}/#{@item.slug}"
       end
     end
@@ -119,7 +119,7 @@ class ItemsController < ApplicationController
     if @item && @item.slug == params[:slug]
       erb :'/items/show'
     else
-      flash.now[:message] = "Item's id and name combination not found, please try again."
+      flash.now[:message] = "Item's id and name combination not found, please try again"
       redirect :"/items"
     end
   end #-- get /items/:id/:slug --
@@ -135,11 +135,11 @@ class ItemsController < ApplicationController
         end
         erb :'/items/edit'
       else
-        flash[:message] = "You don't have permission to edit an item you didn't create."
+        flash[:message] = "You don't have permission to edit an item you didn't create"
         redirect :"/items/#{@item.id}/#{@item.slug}"
       end
     else
-      flash.now[:message] = "Item's id and name combination not found, please try again."
+      flash.now[:message] = "Item's id and name combination not found, please try again"
       redirect :"/items"
     end
   end #-- get /items/:id/:slug/edit --
@@ -158,7 +158,7 @@ class ItemsController < ApplicationController
           if (@item.name != params[:item][:name]) || (@item.folder_id != params[:item][:name].to_i)
             # Flash Message if the new item name already exists for this folder
             if Item.find_by(name: params[:item][:name], folder_id: params[:item][:folder_id])
-              flash[:message] = "You already have an item \'#{params[:item][:name]}\' with this folder, please choose another name."
+              flash[:message] = "You already have an item \'#{params[:item][:name]}\' with this folder, please choose another name"
               redirect :"/items/#{@item.id}/#{@item.slug}/edit"
             end
           end
@@ -167,7 +167,7 @@ class ItemsController < ApplicationController
           # new folder
           folder = Folder.find_by(name: params[:folder][:name])
           if folder && folder.user == current_user
-            flash[:message] = "Folder \'#{params[:folder][:name]}\' already exists, please select from dropdown menu."
+            flash[:message] = "Folder \'#{params[:folder][:name]}\' already exists, please select from dropdown menu"
             redirect :"/items/#{@item.id}/#{@item.slug}/edit"
           else
             @item.update(params[:item])
@@ -175,10 +175,10 @@ class ItemsController < ApplicationController
             @item.save
           end
         end
-        flash[:message] = "You've successfully updated the item \'#{@item.name}\'."
+        flash[:message] = "You've successfully updated the item \'#{@item.name}\'"
         redirect :"/items/#{@item.id}/#{@item.slug}"
       else
-        flash[:message] = "You don't have permission to update an item you didn't create."
+        flash[:message] = "You don't have permission to update an item you didn't create"
         redirect :"/items/#{@item.id}/#{@item.slug}"
       end
     end
@@ -190,10 +190,10 @@ class ItemsController < ApplicationController
     @item = Item.find_by_id(params[:id])
     if @item && @item.folder.user == current_user
       @item.delete
-      flash[:message] = "You've successfully deleted your item #{params[:slug]}."
+      flash[:message] = "You've successfully deleted your item #{params[:slug]}"
       redirect :"/folders/users/#{current_user.slug}"
     else
-      flash[:message] = "You don't have permission to delete an item you didn't create."
+      flash[:message] = "You don't have permission to delete an item you didn't create"
       redirect :"/items/#{@item.id}/#{@item.slug}"
     end
   end #-- delete /items/:id/:slug --

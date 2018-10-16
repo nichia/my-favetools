@@ -23,17 +23,19 @@ class UsersController < ApplicationController
   # create a new instance of user class with a username, email and password. Fill in the session data
   post '/signup' do
     #raise params.inspect
+    #binding.pry
     @user = User.new(params[:user])
-    if @user.valid?
-      @user.save
+    if @user.save
       # set session
       set_session
+      flash[:message] = "Successfully logged in as #{current_user.name}"
       redirect :"/folders/users/#{current_user.slug}"
     else
       if @user.errors.any?
         flash.now[:message] = @user.errors.full_messages.to_sentence
+        flash.now[:message] = "Unsuccessful user signup. See errors: #{@user.errors.full_messages.to_sentence}"
       else
-        flash.now[:message] = "There's an error in signing up, please try again."
+        flash.now[:message] = "There's an error in signing up, please try again"
       end
       erb :'/users/new'
     end
@@ -47,11 +49,11 @@ class UsersController < ApplicationController
       if @user == current_user
         erb :'/users/edit'
       else
-        flash[:message] = "You do not have permission to edit another user's account."
+        flash[:message] = "You do not have permission to edit another user's account"
         redirect :"/users"
       end
     else
-      flash[:message] = "Username \'#{params[:slug]}\' not found."
+      flash[:message] = "Username \'#{params[:slug]}\' not found"
       redirect :"/users"
     end
   end #-- get /settings/:slug --
@@ -59,25 +61,29 @@ class UsersController < ApplicationController
   # PATCH /settings/:slug route #update action
   # modifies an existing user account settings based on username slug in the url
   patch '/settings/:slug' do
-    # binding.pry
     #raise params.inspect
+    #binding.pry
     @user = User.find_by_slug(params[:slug])
-    if @user and @user.authenticate(params[:password])
-      @user.assign_attributes( params[:users] )
-      if @user.valid? && @user.update(params[:users])
+    if @user and @user.authenticate(params[:current_password])
+      #@user.assign_attributes( params[:user] )
+      if params[:user][:password].empty?
+        @user.name = params[:user][:name]
+        @user.email = params[:user][:email]
+        @user.save
+      else
+        @user.update(params[:user])
+      end
+      if @user.valid?
           # reset current user
           reset_current_user
-          redirect :"/folders/users/#{current_user.slug}"
-      end
-
-      if @user.errors.any?
-        flash.now[:message] = @user.errors.full_messages.to_sentence
+          flash[:message] = "Successfully updated user account settings"
+          redirect :"/settings/#{current_user.slug}"
       else
-        flash.now[:message] = "There's an error in updating user account settings, please try again."
+        flash.now[:message] = "Unsuccessful update. See errors: #{@user.errors.full_messages.to_sentence}"
       end
       erb :'/users/edit'
     else
-      flash.now[:message] = "Password incorrect, please try again."
+      flash.now[:message] = "Password incorrect, please try again"
       erb :'/users/edit'
     end
   end #-- patch /settings/:slug --

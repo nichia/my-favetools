@@ -1,8 +1,8 @@
 # Create Users
 
-@user1 = User.create(name: "abby", email: "abby@email.com", password: "password")
-@user2 = User.create(name: "zack", email: "zack@email.com", password: "password")
-@user3 = User.create(name: "jade", email: "jade@email.com", password: "password")
+@user1 = User.create(name: "abby", email: "abby@email.com", password: "Pass1@")
+@user2 = User.create(name: "zack", email: "zack@email.com", password: "Pass1@")
+@user3 = User.create(name: "jade", email: "jade@email.com", password: "Pass1@")
 
 # Create Categories
 @cat1 = Category.create(name: 'Other')

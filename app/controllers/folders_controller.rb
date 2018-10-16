@@ -20,7 +20,7 @@ class FoldersController < ApplicationController
       end
       erb :'/folders/index'
     else
-      flash[:message] = "Username \'#{params[:user_slug]}\' not found."
+      flash[:message] = "Username \'#{params[:user_slug]}\' not found"
       redirect :"/users"
     end
   end #-- get /folders/users/:slug --
@@ -40,14 +40,14 @@ class FoldersController < ApplicationController
     #binding.pry
     if Folder.find_by(name: params[:folder][:name], user_id: current_user.id)
       # Flash Message when the new folder name already exists for current_user
-      flash[:message] = "You already have a folder with this name \'#{params[:folder][:name]}\', please choose another name."
+      flash[:message] = "You already have a folder with this name \'#{params[:folder][:name]}\', please choose another name"
       redirect :"/folders/new"
     else
       @folder = Folder.create(params[:folder])
       @folder.user = current_user
       @folder.save
       # Flash Message when a new folder is created
-      flash[:message] = "Successfully created folder."
+      flash[:message] = "Successfully created folder"
       redirect :"/folders/#{@folder.id}/#{@folder.slug}"
     end
   end #-- post /folders --
@@ -59,7 +59,7 @@ class FoldersController < ApplicationController
     if @folder && @folder.slug == params[:slug]
       erb :'/folders/show'
     else
-      flash.now[:message] = "Folder's id and name combination not found, please try again."
+      flash.now[:message] = "Folder's id and name combination not found, please try again"
       redirect :"/folders"
     end
   end #-- get /folders/:id/:slug --
@@ -75,11 +75,11 @@ class FoldersController < ApplicationController
         end
         erb :'/folders/edit'
       else
-        flash[:message] = "You don't have permission to edit a folder you didn't create."
+        flash[:message] = "You don't have permission to edit a folder you didn't create"
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"
       end
     else
-      flash.now[:message] = "Folder's id and name combination not found, please try again."
+      flash.now[:message] = "Folder's id and name combination not found, please try again"
       redirect :"/folders"
     end
   end #-- get /folders/:id/:slug/edit --
@@ -89,7 +89,7 @@ class FoldersController < ApplicationController
   patch '/folders/:id/:slug' do
     #binding.pry
     if params[:folder][:name].empty?
-      flash[:message] = "Folder name cannot be left blank."
+      flash[:message] = "Folder name cannot be left blank"
       redirect :"/folders/#{@folder.id}/#{@folder.slug}/edit"
     else
       @folder = Folder.find_by_id(params[:id])
@@ -102,10 +102,10 @@ class FoldersController < ApplicationController
           end
         end
         @folder.update(params[:folder])
-        flash[:message] = "You've successfully updated the folder \'#{params[:slug]}\'."
+        flash[:message] = "You've successfully updated the folder \'#{params[:slug]}\'"
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"
       else
-        flash[:message] = "You don't have permission to update a folder you didn't create."
+        flash[:message] = "You don't have permission to update a folder you didn't create"
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"
       end
     end
@@ -116,10 +116,10 @@ class FoldersController < ApplicationController
     @folder = Folder.find_by_id(params[:id])
     if @folder && @folder.user == current_user
       @folder.destroy
-      flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'."
+      flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'"
       redirect :"/folders"
     else
-      flash[:message] = "You don't have permission to delete a folder you didn't create."
+      flash[:message] = "You don't have permission to delete a folder you didn't create"
       redirect :"/folders/#{@folder.id}/#{@folder.slug}"
     end
   end #-- delete /folders/:id/:slug --

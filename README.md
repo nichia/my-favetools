@@ -17,7 +17,9 @@ In a bash terminal, run the server.
 
 ## Usage
 Open up another terminal and copy/paste the IP server address into a web browser URL (usually http://localhost:9393) to use the application.
-Sign up and login to keep track of and share your favorite tools.
+Sign up and login to keep track of and share your favorite tools. Or, you can use this pre-made user setting to login:
+    $ username: jade
+    $ password: Pass1@
 
 ## Contributing
 Bug reports and pull requests are welcome on GitHub at https://github.com/nichia/my-favetools.
