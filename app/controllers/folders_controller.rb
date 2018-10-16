@@ -11,8 +11,7 @@ class FoldersController < ApplicationController
   # GET /folders/users/:slug route #index action
   # index page to display all folders that belongs to this user
   get '/folders/users/:user_slug' do
-    @user = User.find_by_slug(params[:user_slug])
-    if @user
+    if @user = User.find_by_slug(params[:user_slug])
       if @user == current_user
         @folders = Folder.where(user_id: @user.id).order('id DESC')
       else
@@ -43,12 +42,15 @@ class FoldersController < ApplicationController
       flash[:message] = "You already have a folder with this name \'#{params[:folder][:name]}\', please choose another name"
       redirect :"/folders/new"
     else
-      @folder = Folder.create(params[:folder])
-      @folder.user = current_user
-      @folder.save
+      @folder = current_user.folders.build(params[:folder])
       # Flash Message when a new folder is created
-      flash[:message] = "Successfully created folder"
-      redirect :"/folders/#{@folder.id}/#{@folder.slug}"
+      if @folder.save
+        flash[:message] = "Successfully created a new folder"
+        redirect :"/folders/#{@folder.id}/#{@folder.slug}"
+      else
+        flash[:message] = "Errors creating folder"
+        redirect :"/folders/new"
+      end
     end
   end #-- post /folders --
 
@@ -59,7 +61,7 @@ class FoldersController < ApplicationController
     if @folder && @folder.slug == params[:slug]
       erb :'/folders/show'
     else
-      flash.now[:message] = "Folder's id and name combination not found, please try again"
+      flash[:message] = "Folder's id and name combination not found, please try again"
       redirect :"/folders"
     end
   end #-- get /folders/:id/:slug --
@@ -79,7 +81,7 @@ class FoldersController < ApplicationController
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"
       end
     else
-      flash.now[:message] = "Folder's id and name combination not found, please try again"
+      flash[:message] = "Folder's id and name combination not found, please try again"
       redirect :"/folders"
     end
   end #-- get /folders/:id/:slug/edit --
@@ -101,8 +103,11 @@ class FoldersController < ApplicationController
             redirect :"/folders/#{@folder.id}/#{@folder.slug}/edit"
           end
         end
-        @folder.update(params[:folder])
-        flash[:message] = "You've successfully updated the folder \'#{params[:slug]}\'"
+        if @folder.update(params[:folder])
+          flash[:message] = "You've successfully updated the folder"
+        else
+          flash[:message] = "Errors updating folder"
+        end
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"
       else
         flash[:message] = "You don't have permission to update a folder you didn't create"
@@ -115,9 +120,13 @@ class FoldersController < ApplicationController
   delete '/folders/:id/:slug' do
     @folder = Folder.find_by_id(params[:id])
     if @folder && @folder.user == current_user
-      @folder.destroy
-      flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'"
-      redirect :"/folders"
+      if @folder.destroy
+        flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'"
+        redirect :"/folders"
+      else
+        flash[:message] = "Errors deleleting folder"
+        redirect :"/folders/#{@folder.id}/#{@folder.slug}"
+      end
     else
       flash[:message] = "You don't have permission to delete a folder you didn't create"
       redirect :"/folders/#{@folder.id}/#{@folder.slug}"
