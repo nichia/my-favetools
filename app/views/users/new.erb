@@ -2,9 +2,11 @@
 
 <div class="container">
 
-  <% if flash[:message] %>
+  <% if flash[:user_message] %>
     <div class="flash-message-wrapper">
-      <%= flash[:message] %>
+      <% flash[:user_message].each do |msg| %>
+        <li> <%= msg %></li>
+      <% end %>
     </div>
   <% end %>
 
@@ -19,7 +21,7 @@
       <input id="email" type="text" name="user[email]" placeholder="Email" required/><br><br/>
 
       <label for="password">Password</label>
-      <input id="password" type="password" name="user[password]" placeholder="Password" required/>
+      <input id="password" type="password" name="user[password]" placeholder="Password" required/><br><br/>
 
       <label for="password">Password Confirmation</label>
       <input id="password" type="password" name="user[password_confirmation]" placeholder="Re-type password" required/>

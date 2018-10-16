@@ -4,14 +4,19 @@
   <div class="col-md-8 col-md-offset-2">
     <h2>Edit User account settings</h2>
 
-    <% if flash[:message] %>
+    <% if flash[:user_message] %>
       <div class="flash-message-wrapper">
-        <%= flash[:message] %>
+        <% flash[:user_message].each do |msg| %>
+          <li> <%= msg %></li>
+        <% end %>
       </div>
     <% end %>
 
     <form action="/settings/<%= @user.slug %>" method="post">
       <input id="hidden" type="hidden" name="_method" value="patch">
+
+      <label for="password">Current Password</label>
+      <input id="password" type="password" name="current_password" placeholder="Password" required/><br><br/>
 
       <label for="username">Username</label>
       <input id="username" type="text" name="user[name]" placeholder="Username" value="<%= @user.name %>" required/><br><br/>
@@ -19,11 +24,15 @@
       <label for="email">Email</label>
       <input id="email" type="text" name="user[email]" placeholder="Email" value="<%= @user.email %>" required/><br><br/>
 
-      <label for="password">Password</label>
-      <input id="password" type="password" name="user[password]" placeholder="Password" value="<%= @user.password %>" required/>
+      <label for="password">New Password</label>
+      <input id="password" type="password" name="user[password]" placeholder="Password"/><br><br/>
+
+      <label for="password">Password Confirmation</label>
+      <input id="password" type="password" name="user[password_confirmation]" placeholder="Re-type new password"/>
+
 
       <br><br/>
-      
+
       <input type="submit" value="Save">
 
     </form> <!-- /edit route -->

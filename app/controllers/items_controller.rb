@@ -13,7 +13,6 @@ class ItemsController < ApplicationController
   # index page to display all items that belongs to current_user or
   # all public items that belongs to a user
   get '/items/users/:user_slug' do
-    #binding.pry
     user = User.find_by_slug(params[:user_slug])
     if user
       if user == current_user
@@ -33,7 +32,6 @@ class ItemsController < ApplicationController
   # GET /items/users/:user_slug/:folder_slug route - index action
   # index page to display all items base on username and folder slugs in the url
   get '/items/users/:user_slug/:folder_slug' do
-    #binding.pry
     user = User.find_by_slug(params[:user_slug])
     if user
       #find folder_slug that belongs to user.id
@@ -56,7 +54,6 @@ class ItemsController < ApplicationController
       redirect :"/users"
     end
   end #-- get /items/users/:user_slug/:folder_slug --
-
 
   # GET /items/new route #new action
   get '/items/new' do
@@ -84,7 +81,7 @@ class ItemsController < ApplicationController
   # create new item
   post '/items' do
     #raise params.inspect
-    binding.pry
+    #binding.pry
     if params[:item][:name].empty?
       flash[:message] = "Item name cannot be left blank."
       redirect :"/items/new"
@@ -118,7 +115,6 @@ class ItemsController < ApplicationController
   # GET /items/:id/:slug route # Show action
   # displays one item based on ID and slug in the url
   get '/items/:id/:slug' do
-    #binding.pry
     @item = Item.find_by_id(params[:id])
     if @item && @item.slug == params[:slug]
       erb :'/items/show'
@@ -195,7 +191,7 @@ class ItemsController < ApplicationController
     if @item && @item.folder.user == current_user
       @item.delete
       flash[:message] = "You've successfully deleted your item #{params[:slug]}."
-      redirect :"/users/#{current_user.slug}"
+      redirect :"/folders/users/#{current_user.slug}"
     else
       flash[:message] = "You don't have permission to delete an item you didn't create."
       redirect :"/items/#{@item.id}/#{@item.slug}"

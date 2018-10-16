@@ -11,7 +11,6 @@ class FoldersController < ApplicationController
   # GET /folders/users/:slug route #index action
   # index page to display all folders that belongs to this user
   get '/folders/users/:user_slug' do
-    #binding.pry
     @user = User.find_by_slug(params[:user_slug])
     if @user
       if @user == current_user
@@ -39,8 +38,6 @@ class FoldersController < ApplicationController
   post '/folders' do
     #raise params.inspect
     #binding.pry
-    # folder = Folder.find_by(name: params[:folder][:name])
-    # if folder && folder.user == current_user
     if Folder.find_by(name: params[:folder][:name], user_id: current_user.id)
       # Flash Message when the new folder name already exists for current_user
       flash[:message] = "You already have a folder with this name \'#{params[:folder][:name]}\', please choose another name."
@@ -58,7 +55,6 @@ class FoldersController < ApplicationController
   # GET /folders/:id/:slug route #show action
   # displays one folder based on ID and slug in the url
   get '/folders/:id/:slug' do
-    #binding.pry
     @folder = Folder.find_by_id(params[:id])
     if @folder && @folder.slug == params[:slug]
       erb :'/folders/show'
@@ -117,13 +113,8 @@ class FoldersController < ApplicationController
 
   # DELETE /folders/:slug route #delete action
   delete '/folders/:id/:slug' do
-    #binding.pry
     @folder = Folder.find_by_id(params[:id])
     if @folder && @folder.user == current_user
-      # items=@folder.items
-      # items.each do |item|
-      #   item.destroy
-      # end
       @folder.destroy
       flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'."
       redirect :"/folders"

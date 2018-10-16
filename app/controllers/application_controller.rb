@@ -19,7 +19,7 @@ class ApplicationController < Sinatra::Base
             request.path_info == "/signup")
 
     if !logged_in?
-      flash[:message] = "Please log in or sign up first before you can access myFaveTools."
+      flash[:message] = "Please log in or sign up first before you can use myFaveTools."
       redirect :"/"
     end
   end #-- before --
@@ -63,7 +63,7 @@ class ApplicationController < Sinatra::Base
 
     def set_session
       session[:user_id] = @user.id
-      flash[:message] = "Welcome to myFaveTools."
+      flash[:message] = "You're logged in as #{current_user.name}"
     end
 
     def logout

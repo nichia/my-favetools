@@ -13,7 +13,11 @@
 
   /* --- Welcome Page Styles --- */
   body {
-    background-color: lightpink;
+    /* background-color: lightpink; */
+    background-color: #b2cecf;
+    /* background-color: #B94629; */
+    /* background-color: #E89F65; */
+    /* background-color: #E3DEC1; */
     color: #333;
     font-family: Sans-Serif;
     line-height: 18px;
