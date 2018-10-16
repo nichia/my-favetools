@@ -67,9 +67,7 @@ class UsersController < ApplicationController
     if @user and @user.authenticate(params[:current_password])
       #@user.assign_attributes( params[:user] )
       if params[:user][:password].empty?
-        @user.name = params[:user][:name]
-        @user.email = params[:user][:email]
-        @user.save
+        @user.update(name: params[:user][:name], email: params[:user][:email])
       else
         @user.update(params[:user])
       end

@@ -85,13 +85,13 @@
     margin-top: 20px;
     padding-top: 20px;
   }
-}
 
-/* flash message */
-.flash-message-wrapper {
-  margin-bottom: 1.0em;
-  font-size: 1.4em;
-  text-align: center;
+  /* flash message */
+  .flash-message-wrapper {
+    margin-bottom: 1.0em;
+    font-size: 1.2em;
+    color: blue;
+  }
 }
 
 @media screen and (max-width: 600px) {

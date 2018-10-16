@@ -94,8 +94,7 @@ class ItemsController < ApplicationController
       else
         # new folder
         if !params[:folder][:name].empty?
-          folder = Folder.find_by(name: params[:folder][:name])
-          if folder && folder.user == current_user
+          if Folder.find_by(name: params[:folder][:name], user_id: current_user.id)
             flash[:message] = "Folder \'#{params[:folder][:name]}\' already exists, please select from dropdown menu"
             redirect :"/items/new"
           else
@@ -155,7 +154,7 @@ class ItemsController < ApplicationController
       @item = Item.find_by_id(params[:id])
       if @item && @item.folder.user == current_user
         if params[:folder][:name].empty?
-          if (@item.name != params[:item][:name]) || (@item.folder_id != params[:item][:name].to_i)
+          if (@item.name != params[:item][:name]) || (@item.folder_id != params[:item][:folder_id].to_i)
             # Flash Message if the new item name already exists for this folder
             if Item.find_by(name: params[:item][:name], folder_id: params[:item][:folder_id])
               flash[:message] = "You already have an item \'#{params[:item][:name]}\' with this folder, please choose another name"
@@ -165,8 +164,7 @@ class ItemsController < ApplicationController
           @item.update(params[:item])
         else
           # new folder
-          folder = Folder.find_by(name: params[:folder][:name])
-          if folder && folder.user == current_user
+          if Folder.find_by(name: params[:folder][:name], user_id: current_user.id)
             flash[:message] = "Folder \'#{params[:folder][:name]}\' already exists, please select from dropdown menu"
             redirect :"/items/#{@item.id}/#{@item.slug}/edit"
           else
