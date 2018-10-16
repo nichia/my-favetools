@@ -1,26 +1,11 @@
 <!-- _header -->
 
 <header>
-  <!-- Nav Bar -->
-  <nav>
-    <a href="/">Home</a>
-    <% if logged_in? %>
-      <a href="/folders">Folders</a>
-      <a href="/items">Items</a>
-      <a href="/users">Users</a>
-      <a href="/settings/<%= current_user.slug %>">Settings</a>
-      <a href="/logout">Log out</a>
-    <% else %>
-      <a href="/signup">Sign Up</a>
-      <a href="/login">Log In</a>
-    <% end %>
-  </nav>
 
-  <!-- right-hand side menu -->
   <div class="right menu">
-    <h2>Welcome to myFaveTools</h2>
 
     <% if logged_in? %>
+      <h2>Welcome <%= current_user.slug %> to myFaveTools</h2>
       <% if !path_info.match(/\/folders\/new/) %>
         <a href="/folders/new">New Folder</a>
       <% end %>
@@ -28,6 +13,8 @@
       <% if !path_info.match(/\/items\/new/) %>
         <a href="/items/new">New Item</a>
       <% end %>
+    <% else %>
+      <h2>myFaveTools</h2>
     <% end %>
   </div>
 
