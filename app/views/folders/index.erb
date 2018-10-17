@@ -33,7 +33,7 @@
           <td><%= folder.category.name %></td>
           <td><%= folder.user.name %></td>
           <td><input type="checkbox" <% if folder.privacy %> checked <% end %>></td>
-          <td><a href="/items/users/<%= folder.user.slug %>/<%= folder.slug %>"><%= folder.items.count %></td>
+          <td><a href="/items/users/<%= folder.user.slug %>/<%= folder.slug %>"><%= folder.items.count %></a></td>
         </tr>
       <% end %>
     <table>
