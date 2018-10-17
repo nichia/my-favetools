@@ -11,9 +11,9 @@
   <div class="col-md-8 col-md-offset-2">
     <% if path_info.match(/\/users\//) %>
       <% p_user = path_info.split("/users/").last %>
-      <h2>Folders shared by <%= p_user %></h2>
+      <h3>Folders shared by <%= p_user %></h3>
     <% else %>
-      <h2>All Folders</h2>
+      <h3>All Folders</h3>
     <% end %>
 
     <table>

@@ -5,7 +5,7 @@
   <div class="right menu">
 
     <% if logged_in? %>
-      <h2>Welcome <%= current_user.slug %> to myFaveTools</h2>
+      <h2> myFaveTools welcomes <%= current_user.slug %> </h2>
       <% if !path_info.match(/\/folders\/new/) %>
         <a href="/folders/new">New Folder</a>
       <% end %>
