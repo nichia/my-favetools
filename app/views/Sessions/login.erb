@@ -2,14 +2,10 @@
 
 <div class="container">
 
-  <% if flash[:message] %>
-    <div class="flash-message-wrapper">
-      <%= flash[:message] %>
-    </div>
-  <% end %>
+  <%= erb :'/partials/_flash_message' %>
 
   <div class="col-md-8 col-md-offset-2">
-    <h2>Log in</h2>
+    <h3>Log in</h3>
     <form action="/login" method="post">
 
       <label for="username_or_email">Username or email</label>

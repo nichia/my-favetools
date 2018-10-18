@@ -2,14 +2,10 @@
 
 <div class="container">
 
-  <% if flash[:message] %>
-    <div class="flash-message-wrapper">
-      <%= flash[:message] %>
-    </div>
-  <% end %>
+  <%= erb :'/partials/_flash_message' %>
 
   <div class="col-md-8 col-md-offset-2">
-    <h2>Create Item</h2>
+    <h3>Create Item</h3>
     <form action="/items" method="post">
 
       <label for="name">Name</label>

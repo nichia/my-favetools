@@ -2,14 +2,10 @@
 
 <div class="container">
 
-  <% if flash[:message] %>
-    <div class="flash-message-wrapper">
-      <%= flash[:message] %>
-    </div>
-  <% end %>
+  <%= erb :'/partials/_flash_message' %>
 
   <div class="col-md-8 col-md-offset-2">
-    <h2>Edit Items</h2>
+    <h3>Edit Items</h3>
     <form action="/items/<%= @item.id %>/<%= @item.slug %>" method="post">
       <input id="hidden" type="hidden" name="_method" value="patch"/>
 

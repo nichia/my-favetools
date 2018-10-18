@@ -1,15 +1,11 @@
 <!-- /users/edit -->
 
 <div class="container">
+
+  <%= erb :'/partials/_flash_message' %>
+
   <div class="col-md-8 col-md-offset-2">
-    <h2>Edit User account settings</h2>
-
-    <% if flash[:message] %>
-      <div class="flash-message-wrapper">
-        <%= flash[:message] %>
-      </div>
-    <% end %>
-
+    <h3>Edit User account settings</h3>
     <form action="/settings/<%= @user.slug %>" method="post">
       <input id="hidden" type="hidden" name="_method" value="patch">
 

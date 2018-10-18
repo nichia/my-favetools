@@ -2,18 +2,17 @@
 
 <div class="container">
 
+  <%= erb :'/partials/_flash_message' %>
+
   <div class="col-md-8 col-md-offset-2">
-    <h2>Home</h2>
+    <h3>Welcome to myFaveTools</h3>
 
-    <% if flash[:message] %>
-      <div class="flash-message-wrapper">
-        <%= flash[:message] %>
-      </div>
-    <% end %>
+    <br></br>
 
-    <div class="content">
-        <h3><a href="/signup">Sign Up</a> or <a href="/login">Log In</a> to continue.</h3>
-    </div> <!-- .content -->
+    <p>A place to keep track of and share your favorite ideas!</p>
 
-  </div> <!-- .col-md-8 col-md-offset-2 -->
-</div> <!-- .container -->
+    <br></br>
+
+    <h3><a href="/signup">Sign Up</a> or <a href="/login">Log In</a> to continue.</h3>
+  </div>
+</div>

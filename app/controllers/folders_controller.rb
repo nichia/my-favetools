@@ -8,9 +8,9 @@ class FoldersController < ApplicationController
     erb :'/folders/index'
   end #-- get /folders --
 
-  # GET /folders/users/:slug route #index action
+  # GET /users/:user_id/folders do route #index action
   # index page to display all folders that belongs to this user
-  get '/folders/users/:user_slug' do
+  get '/users/:user_slug/folders' do
     if @user = User.find_by_slug(params[:user_slug])
       if @user == current_user
         @folders = Folder.where(user_id: @user.id).order('id DESC')
@@ -22,7 +22,7 @@ class FoldersController < ApplicationController
       flash[:message] = "Username \'#{params[:user_slug]}\' not found"
       redirect :"/users"
     end
-  end #-- get /folders/users/:slug --
+  end #-- get /users/:user_slug/folders --
 
   # GET /folders/new route #new action
   get '/folders/new' do
@@ -122,7 +122,7 @@ class FoldersController < ApplicationController
     if @folder && @folder.user == current_user
       if @folder.destroy
         flash[:message] = "You've successfully deleted your folder \'#{params[:slug]}\'"
-        redirect :"/folders/users/#{@current_user.slug}"
+        redirect :"/users/#{@current_user.slug}/folders"
       else
         flash[:message] = "Errors deleleting folder"
         redirect :"/folders/#{@folder.id}/#{@folder.slug}"

@@ -2,14 +2,10 @@
 
 <div class="container">
 
-  <% if flash[:message] %>
-    <div class="flash-message-wrapper">
-      <%= flash[:message] %>
-    </div>
-  <% end %>
+  <%= erb :'/partials/_flash_message' %>
 
   <div class="col-md-8 col-md-offset-2">
-    <h2>Folder</h2>
+    <h3>Folder</h3>
     <p><b>Name:</b> <%= @folder.name %></p>
     <p><b>Description:</b> <%= @folder.description %></p>
     <p><b>Category:</b> <%= @folder.category.name %></p>
@@ -18,12 +14,12 @@
     <p><b>Private Folder:</b>
     <input type="checkbox" <% if @folder.privacy %> checked <% end %>></p>
 
-    <p><b>Items:</b> <a href="/items/users/<%= @folder.user.slug %>/<%= @folder.slug %>"><%= @folder.items.count %></a></p>
+    <p><b>Items:</b> <a href="/users/<%= @folder.user.slug %>/<%= @folder.slug %>/items"><%= @folder.items.count %></a></p>
   </div> <!-- .col-md-8 col-md-offset-2 -->
 
   <!-- Form to Edit / Delete Folder -->
   <% if @folder.user == current_user %>
-    <a href="/folders/<%= @folder.id %>/<%= @folder.slug %>/edit">Edit</a>
+    <a href="/folders/<%= @folder.id %>/<%= @folder.slug %>/edit" class="btn btn-info" role="button">Edit</a>
 
     <br><br/>
 

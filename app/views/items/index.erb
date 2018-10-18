@@ -1,26 +1,32 @@
 <!-- /items/index -->
 
 <div class="container">
-
-  <% if flash[:message] %>
-    <div class="flash-message-wrapper">
-      <%= flash[:message] %>
-    </div>
-  <% end %>
-
+  <%= erb :'/partials/_flash_message' %>
   <div class="col-md-8 col-md-offset-2">
-    <% if path_info.match(/\/users\//) %>
+    <!-- url path_info: -->
+    <!-- /users/<username>/<folder name>/items -->
+    <!-- /users/<username>/items -->
+    <!-- /items -->
+    <% if path_info.match(/\A\/users\//) %>
       <% p_user_folder = path_info.split("/") %>
       <% if path_info.split("/").count == 5 %>
-        <h3>Items shared by <%= path_info.split("/")[-2] %> from folder <%= path_info.split("/")[-1] %></a></h3>
+        <% if current_user.slug == path_info.split("/")[-3] %>
+          <h3>Your items from folder <%= path_info.split("/")[-2] %></h3>
+        <% else %>
+          <h3>Items shared by <%= path_info.split("/")[-3] %> from folder <%= path_info.split("/")[-2] %></h3>
+        <% end %>
       <% else %>
-        <h3>Items shared by <%= path_info.split("/")[-1]  %></a></h3>
+        <% if current_user.slug == path_info.split("/")[-2] %>
+          <h3>Your items</h3>
+        <% else %>
+          <h3>Items shared by <%= path_info.split("/")[-2] %></h3>
+        <% end %>
       <% end %>
     <% else %>
       <h3>All Items</h3>
     <% end %>
 
-    <table>
+    <table class="table table-striped">
       <tr>
         <th> Name </th>
         <th> Description </th>

@@ -1,0 +1,18 @@
+/*/////// MEDIA ////////*/
+
+img, video, audio, iframe, table, form {
+  width: 100%; /* IE */
+  max-width: 100%; /* FF, Safari, Chrome */
+}
+
+/*/////// LAYOUT STYLES ////////*/
+
+.row {
+  margin-bottom: 20px !important;
+}
+
+body {
+  /* background: #b2cecf !important; */
+  padding-top: 50px;
+}
+/* Adding !important forces the browser to overwrite the default style applied by Bootstrap */

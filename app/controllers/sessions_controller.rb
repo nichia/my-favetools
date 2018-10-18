@@ -25,7 +25,7 @@ class SessionsController < ApplicationController
         # set session
         set_session
         flash[:message] = "Successfully logged in as #{current_user.name}"
-        redirect :"/folders/users/#{current_user.slug}"
+        redirect :"/users/#{current_user.slug}/folders"
       else
         flash.now[:message] = "Username/email and password combination do not match, please try again"
         erb :'/sessions/login'

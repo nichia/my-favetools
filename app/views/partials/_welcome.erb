@@ -1,0 +1,33 @@
+<!-- _welcome -->
+
+<div class="row">
+  <div class="col-sm-12">
+    <% if logged_in? %>
+      <!-- 2nd level nav link -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="text-left">
+            <h3> Welcome to myFaveTools <%= current_user.slug %></h3>
+          </div>
+          <ul class="navbar-nav ml-auto">
+            <!-- url path_info: -->
+            <!-- /folders/new -->
+            <!-- /items/new -->
+            <!-- * -->
+            <% if !path_info.match(/\/folders\/new/) %>
+              <li class="nav-item">
+                <a href="/folders/new" class="btn btn-info" role="button">New Folder</a>
+              </li>
+            <% end %>
+
+            <% if !path_info.match(/\/items\/new/) %>
+              <li class="nav-item">
+                <a href="/items/new" class="btn btn-info" role="button">New Item</a>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </nav>
+    <% end %>
+  </div>
+</div>

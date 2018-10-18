@@ -2,26 +2,22 @@
 
 <div class="container">
 
-  <% if flash[:message] %>
-    <div class="flash-message-wrapper">
-      <%= flash[:message] %>
-    </div>
-  <% end %>
+  <%= erb :'/partials/_flash_message' %>
 
   <div class="col-md-8 col-md-offset-2">
-    <h2>Item</h2>
+    <h3>Item</h3>
     <p><b>Name:</b> <%= @item.name %></p>
     <p><b>Description:</b> <%= @item.description %></p>
     <p><b>Website: </b> <a href="<%= @item.url_link %>"  target="_blank"><%= @item.url_link %></a></p>
     <p><b>Rating:</b> <%= @item.rating %></p>
-    <p><b>Folder:</b> <a href="/folders/<%= @item.folder.id %>/<%= @item.folder.slug %>"><%= @item.folder.name %></a></p>
+    <p><b>Folder:</b> <a href="/users/<%= @item.folder.user.slug %>/<%= @item.folder.slug %>/items"><%= @item.folder.name %></a></p>
     <p><b>User:</b> <%= @item.folder.user.name %></p>
 
   </div> <!-- .col-md-8 col-md-offset-2 -->
 
   <!-- Form to Edit / Delete Item -->
   <% if @item.folder.user == current_user %>
-    <a href="/items/<%= @item.id %>/<%= @item.slug %>/edit">Edit</a>
+    <a href="/items/<%= @item.id %>/<%= @item.slug %>/edit" class="btn btn-info" role="button">Edit</a>
 
     <br><br/>
 
@@ -31,7 +27,7 @@
     </form>
   <% else %>
     <!-- Link to Copy this Item by creating a new Item base on this version -->
-    <a href="/items/new/<%= @item.id %>">Copy Item</a>
+    <a href="/items/new/<%= @item.id %>" class="btn btn-info" role="button">Copy Item</a>
   <% end %>
 
 </div> <!-- .container -->

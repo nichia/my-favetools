@@ -13,7 +13,7 @@ class UsersController < ApplicationController
   # user registration to create a new user
   get '/signup' do
     if logged_in?
-      redirect :"/folders/users/#{current_user.slug}"
+      redirect :"/users/#{current_user.slug}/folders"
     else
       erb :'/users/new'
     end
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
       # set session
       set_session
       flash[:message] = "Successfully logged in as #{current_user.name}"
-      redirect :"/folders/users/#{current_user.slug}"
+      redirect :"/users/#{current_user.slug}/folders"
     else
       if @user.errors.any?
         flash.now[:message] = @user.errors.full_messages.to_sentence
