@@ -1,9 +1,10 @@
 development:
-  adapter: sqlite3
+  adapter: postgresql
   encoding: unicode
-  database: db/database.sqlite3
+  database: database_development
   pool: 2
 production:
   adapter: postgresql
   encoding: unicode
+  databaes: database_production
   pool: 5

@@ -19,6 +19,7 @@ In a bash terminal, clone the application repository from github then run the ap
     $ git clone git@github.com:nichia/my-favetools.git
     $ cd my-Favetools
     $ bundle install
+    $ bundle exec rake db:create
     $ bundle exec rake db:migrate
     $ bundle exec rake db:seed
 
