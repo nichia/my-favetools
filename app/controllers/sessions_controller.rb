@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   # renders a form for logging in
   get '/login' do
     if logged_in?
-      redirect :"/users/#{current_user.slug}"
+      redirect :"/users/#{current_user.slug}/folders"
     else
       erb :'/sessions/login'
     end
