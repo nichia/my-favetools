@@ -24,11 +24,12 @@ class User < ActiveRecord::Base
 
   validates :name,
     presence: { message: "Username must be provided" },
-    length: { in: 3..12,
-      too_long: "Username too long, (maximum is 12 characters)",
-      too_short: "Username too short, (minimum is 3 characters)", },
+    length: { in: 3..36,
+      too_long: "Please shorten password to 36 characters or less",
+
+      too_short: "Please lengthen password to 3 characters or more", },
     uniqueness: { case_sensitive: false },
-    format: { with: USERNAME_REGEX, message: "Username must contain alphanumeric, underscores and dashes only" }
+    format: { with: USERNAME_REGEX, message: "Username must include alphanumeric, underscores and dashes only" }
 
   validates :email,
     presence: true,
@@ -37,14 +38,14 @@ class User < ActiveRecord::Base
 
   validates :password,
    presence: true,
-   length: { in: 6..32 },
-   format: { with: PASSWORD_FORMAT, message: "must contain a digit, symbol, upper and lower cases, and have 6 or more characters" },
+   length: { in: 6..36 },
+   format: { with: PASSWORD_FORMAT, message: "format must include a digit, symbol, upper and lower cases, and have 6 or more characters" },
    on: :create
 
   validates :password,
    allow_nil: true,
-   length: { in: 6..32 },
-   format: { with: PASSWORD_FORMAT, message: "must contain a digit, symbol, upper and lower cases, and have 6 or more characters" },
+   length: { in: 6..36 },
+   format: { with: PASSWORD_FORMAT, message: "format must include a digit, symbol, upper and lower cases, and have 6 or more characters" },
    on: :update
 
   include Slugifiable::InstanceMethods
