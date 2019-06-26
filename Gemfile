@@ -11,7 +11,6 @@ gem 'sinatra-flash'
 gem 'dotenv'
 gem 'pg', '>= 0.18', '< 2.0'
 
-
 group :development do
   gem 'sqlite3'
   gem 'shotgun'
