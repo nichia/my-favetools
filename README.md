@@ -4,13 +4,13 @@ My-FaveTools is a Sinatra web application created to keep track of and share my 
 
 ## Demo
 
-Visit [https://my-favetools.herokuapp.com/](https://my-favtools.herokuapp.com/) to browse my-favetools.
+Visit [https://my-favetools.herokuapp.com/](https://my-favetools.herokuapp.com/) to browse my-favetools.
 
 Sign up and login to keep track of and share your favorite tools. Or, you can use this pre-made user account setting to login:
 
     $ username: jade
     $ email: jade@email.com
-    $ password: Pass1@d
+    $ password: Pass1@
 
 ## Installation to run locally
 
